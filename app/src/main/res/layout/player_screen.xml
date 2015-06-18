@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/material_blue_grey_800">
+
+    <TextView
+        android:id="@+id/player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+
+        android:text="Player Name"
+        android:textSize="30dp"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:id="@+id/player_life"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/player_name"
+        android:layout_marginTop="60dp"
+
+        android:text="20"
+        android:textSize="30dp"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/sub_life_total"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="95dp"
+        android:layout_toLeftOf="@+id/player_life"
+        android:layout_marginRight="40dp"
+
+        android:backgroundTint="#0099CC"
+        android:text="-"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="sub_action"/>
+
+    <Button
+        android:id="@+id/add_life_total"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="95dp"
+        android:layout_toRightOf="@+id/player_life"
+        android:layout_marginLeft="40dp"
+
+        android:backgroundTint="#0099CC"
+        android:text="-"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="add_action"/>
+
+</RelativeLayout>

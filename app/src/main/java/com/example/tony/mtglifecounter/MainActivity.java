@@ -34,6 +34,9 @@ public class MainActivity extends ActionBarActivity {
 
         if (int_people == 2) {
             startActivity(intent_two);
+        } else if (int_people == 3) {
+            intent_p2.putExtra("number_of_people", int_people);
+            startActivity(intent_p2);
         } else {
             intent_p2.putExtra("number_of_people", int_people);
             startActivity(intent_p2);
