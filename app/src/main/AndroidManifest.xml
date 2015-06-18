@@ -20,6 +20,10 @@
             android:name=".Counter"
             android:label="@string/title_activity_counter" >
         </activity>
+        <activity
+            android:name=".TwoPlayer"
+            android:label="@string/title_activity_two_player" >
+        </activity>
     </application>
 
 </manifest>

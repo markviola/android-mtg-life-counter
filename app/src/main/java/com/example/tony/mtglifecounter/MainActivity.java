@@ -27,11 +27,17 @@ public class MainActivity extends ActionBarActivity {
         TextView title = (TextView)findViewById(R.id.title);
         TextView num_players = (TextView)findViewById(R.id.num_players);
         String people = (String)num_players.getText();
+        int int_people = (int)people.charAt(0) - 48;
 
-        Intent intent = new Intent(getApplicationContext(),Counter.class);
-        intent.putExtra("number_of_people", people);
+        Intent intent_p2 = new Intent(getApplicationContext(),Counter.class);
+        Intent intent_two = new Intent(getApplicationContext(), TwoPlayer.class);
 
-        startActivity(intent);
+        if (int_people == 2) {
+            startActivity(intent_two);
+        } else {
+            intent_p2.putExtra("number_of_people", int_people);
+            startActivity(intent_p2);
+        }
     }
 
     public void plus_button(View v){
@@ -58,9 +64,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "onStart");
+
         //Hides Action Bar
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.tony.mtglifecounter;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,70 +8,42 @@ import android.view.MenuItem;
 import android.util.Log;
 import android.widget.TextView;
 
-public class Counter extends ActionBarActivity {
+public class TwoPlayer extends ActionBarActivity {
 
     private static final String TAG = "Tony message";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String num_of_people = "";
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_counter);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i(TAG, "NEW onStop");
+        setContentView(R.layout.activity_two_player);
+        Log.i(TAG, "TwoPlayer onCreate");
     }
 
     @Override
     protected void onStart() {
-        int num_of_people = 0;
-
         super.onStart();
-        Log.i(TAG, "NEW onStart");
+        Log.i(TAG, "TwoPlayer onStart");
         //Hides Action Bar
         getSupportActionBar().hide();
-        //setContentView(R.layout.activity_counter);
-
-        //Get value
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            num_of_people = extras.getInt("number_of_people");
-        }
-        TextView the_input = (TextView)findViewById(R.id.the_input);
-        the_input.setText(""+(char)(num_of_people+48));
+        setContentView(R.layout.activity_two_player);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "NEW onResume");
+        Log.i(TAG, "TwoPlayer onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(TAG, "NEW onPause");
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.i(TAG, "NEW onSaveInstanceState");
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.i(TAG, "NEW onRestoreInstanceState");
+        Log.i(TAG, "TwoPlayer onPause");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_counter, menu);
+        getMenuInflater().inflate(R.menu.menu_two_player, menu);
         return true;
     }
 
