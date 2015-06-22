@@ -48,7 +48,7 @@
         android:layout_marginLeft="40dp"
 
         android:backgroundTint="#0099CC"
-        android:text="-"
+        android:text="+"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="add_action"/>
 

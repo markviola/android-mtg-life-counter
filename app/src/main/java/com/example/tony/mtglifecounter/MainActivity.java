@@ -29,17 +29,17 @@ public class MainActivity extends ActionBarActivity {
         String people = (String)num_players.getText();
         int int_people = (int)people.charAt(0) - 48;
 
-        Intent intent_p2 = new Intent(getApplicationContext(),Counter.class);
-        Intent intent_two = new Intent(getApplicationContext(), TwoPlayer.class);
+        Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreen.class);
+        //Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreen.class);
+        //Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
 
         if (int_people == 2) {
-            startActivity(intent_two);
+            startActivity(two_player);
         } else if (int_people == 3) {
-            intent_p2.putExtra("number_of_people", int_people);
-            startActivity(intent_p2);
+            //startActivity(three_player);
+            startActivity(two_player);
         } else {
-            intent_p2.putExtra("number_of_people", int_people);
-            startActivity(intent_p2);
+            //startActivity(four_player);
         }
     }
 

@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    tools:context="com.example.tony.mtglifecounter.TwoPlayerScreen">
+
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        android:name="com.example.tony.mtglifecounter.TwoPlayerLifeFragment"
+        android:id="@+id/fragment"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/two_player_life_fragment"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        android:name="com.example.tony.mtglifecounter.TwoPlayerLifeFragment"
+        android:id="@+id/fragment2"
+        android:layout_below="@+id/fragment"
+        tools:layout="@layout/two_player_life_fragment"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment2"
+        android:text="Reset"
+        android:background="#FFFFFF"
+        android:backgroundTint="#DDDDDD" />
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/reset_button"
+        android:layout_below="@+id/fragment2"
+        android:text="Settings"
+        android:background="#FFFFFF"
+        android:backgroundTint="#DDDDDD" />
+
+</RelativeLayout>

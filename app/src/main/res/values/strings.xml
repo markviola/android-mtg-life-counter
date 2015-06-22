@@ -12,4 +12,5 @@
     <string name="two_player_player_one">Player 1</string>
     <string name="two_player_player_two">Player 2</string>
     <string name="p2_player_one_edit">edit</string>
+    <string name="title_activity_two_player_screen">TwoPlayerScreen</string>
 </resources>

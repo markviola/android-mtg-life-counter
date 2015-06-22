@@ -17,12 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Counter"
-            android:label="@string/title_activity_counter" >
-        </activity>
-        <activity
-            android:name=".TwoPlayer"
-            android:label="@string/title_activity_two_player" >
+            android:name=".TwoPlayerScreen"
+            android:label="@string/title_activity_two_player_screen" >
         </activity>
     </application>
 
