@@ -11,7 +11,7 @@
         android:layout_marginTop="10dp"
 
         android:text="Player Name"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textColor="#FFFFFF"/>
 
     <TextView
@@ -19,17 +19,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="102dp"
+        android:layout_marginTop="92dp"
 
         android:text="20"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textColor="#FFFFFF"/>
 
     <Button
         android:id="@+id/sub_life_total"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="95dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="85dp"
         android:layout_toLeftOf="@+id/player_life"
         android:layout_marginRight="40dp"
 
@@ -40,9 +40,9 @@
 
     <Button
         android:id="@+id/add_life_total"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="95dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="85dp"
         android:layout_toRightOf="@+id/player_life"
         android:layout_marginLeft="40dp"
 
