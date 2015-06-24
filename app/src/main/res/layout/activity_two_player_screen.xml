@@ -32,5 +32,4 @@
         android:id="@+id/fragment6"
         tools:layout="@layout/reset_and_settings_fragment" />
 
-
 </LinearLayout>

@@ -31,14 +31,14 @@ public class MainActivity extends ActionBarActivity {
 
         Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreen.class);
         Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreen.class);
-        //Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
+        Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
 
         if (int_people == 2) {
             startActivity(two_player);
         } else if (int_people == 3) {
             startActivity(three_player);
         } else {
-            //startActivity(four_player);
+            startActivity(four_player);
         }
     }
 

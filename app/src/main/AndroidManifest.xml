@@ -24,6 +24,10 @@
             android:name=".ThreePlayerScreen"
             android:label="@string/title_activity_three_player_screen" >
         </activity>
+        <activity
+            android:name=".FourPlayerScreen"
+            android:label="@string/title_activity_four_player_screen" >
+        </activity>
     </application>
 
 </manifest>

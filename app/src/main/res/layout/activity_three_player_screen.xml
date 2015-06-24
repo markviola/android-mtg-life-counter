@@ -40,5 +40,4 @@
         android:layout_gravity="center_horizontal"
         tools:layout="@layout/reset_and_settings_fragment" />
 
-
 </LinearLayout>
