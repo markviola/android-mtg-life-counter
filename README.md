@@ -10,10 +10,16 @@ Starting Screen:
   <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/main.png?raw=true" alt="Main Page" width="280px" height="498px"/>
 </p>
 
-Two, Three, and Four Player Screens (respectively):
+Two, Three, and Four Player Life Total Screens (respectively):
 
 <p align="center">
   <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/player_screens.jpg?raw=true" alt="Player Screens"/>
+</p>
+
+Two, Three, and Four Player Poison Counter Screens (respectively):
+
+<p align="center">
+  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/player_screens_poison.jpg?raw=true" alt="Player Screens"/>
 </p>
 
 
