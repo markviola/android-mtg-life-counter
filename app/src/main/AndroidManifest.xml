@@ -28,6 +28,18 @@
             android:name=".FourPlayerScreen"
             android:label="@string/title_activity_four_player_screen" >
         </activity>
+        <activity
+            android:name=".TwoPlayerScreenAlt"
+            android:label="@string/title_activity_two_player_screen_alt" >
+        </activity>
+        <activity
+            android:name=".ThreePlayerScreenAlt"
+            android:label="@string/title_activity_three_player_screen_alt" >
+        </activity>
+        <activity
+            android:name=".FourPlayerScreenAlt"
+            android:label="@string/title_activity_four_player_screen_alt" >
+        </activity>
     </application>
 
 </manifest>

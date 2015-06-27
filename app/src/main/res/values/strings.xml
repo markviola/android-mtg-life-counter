@@ -15,4 +15,7 @@
     <string name="title_activity_two_player_screen">TwoPlayerScreen</string>
     <string name="title_activity_three_player_screen">ThreePlayerScreen</string>
     <string name="title_activity_four_player_screen">FourPlayerScreen</string>
+    <string name="title_activity_two_player_screen_alt">TwoPlayerScreenAlt</string>
+    <string name="title_activity_three_player_screen_alt">ThreePlayerScreenAlt</string>
+    <string name="title_activity_four_player_screen_alt">FourPlayerScreenAlt</string>
 </resources>

@@ -18,7 +18,6 @@ Two, Three, and Four Player Screens (respectively):
 
 
 ####To-do List:
-* Add poison counter tracker
 * Add endgame screen
 * Add settings page
 * Allow for custom player color schemes

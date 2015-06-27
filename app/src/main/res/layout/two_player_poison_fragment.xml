@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9966FF">
+    android:background="#6666FF">
 
     <TextView
         android:id="@+id/player_name"
@@ -35,7 +35,7 @@
         android:layout_toLeftOf="@+id/player_life"
         android:layout_marginRight="40dp"
 
-        android:backgroundTint="#CC66FF"
+        android:backgroundTint="#9966FF"
         android:text="-"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="sub_action"/>
@@ -48,7 +48,7 @@
         android:layout_toRightOf="@+id/player_life"
         android:layout_marginLeft="40dp"
 
-        android:backgroundTint="#CC66FF"
+        android:backgroundTint="#9966FF"
         android:text="+"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="add_action"/>

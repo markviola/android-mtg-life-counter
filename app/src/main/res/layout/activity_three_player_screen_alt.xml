@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
+    android:orientation="vertical"
+    tools:context="com.example.tony.mtglifecounter.ThreePlayerScreen">
+
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.316"
+        android:name="com.example.tony.mtglifecounter.ThreePlayerPoisonFragment"
+        android:id="@+id/fragment16"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/three_player_poison_fragment" />
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.316"
+        android:name="com.example.tony.mtglifecounter.ThreePlayerPoisonFragment"
+        android:id="@+id/fragment17"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/three_player_poison_fragment" />
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.316"
+        android:name="com.example.tony.mtglifecounter.ThreePlayerPoisonFragment"
+        android:id="@+id/fragment18"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/three_player_poison_fragment" />
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.052"
+        android:name="com.example.tony.mtglifecounter.ResetAndSettingsFragment"
+        android:id="@+id/fragment19"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/reset_and_settings_fragment" />
+</LinearLayout>
