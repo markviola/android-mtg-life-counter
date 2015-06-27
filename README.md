@@ -7,7 +7,7 @@ The MTG Life Counter is an Android app that allows people to easily keep track o
 Starting Screen:
 
 <p align="center">
-  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/main.png?raw=true" alt="Main Page" width="200px" height="533px"/>
+  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/main.png?raw=true" alt="Main Page" width="280px" height="498px"/>
 </p>
 
 Two, Three, and Four Player Screens (respectively):
