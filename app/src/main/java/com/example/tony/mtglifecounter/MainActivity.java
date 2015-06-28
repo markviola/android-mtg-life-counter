@@ -12,53 +12,50 @@ import android.widget.TextView;
 import android.view.View;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity{
 
     private static final String TAG = "Tony message";
+    TextView num_players, title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "onCreate");
+
+        title = (TextView)findViewById(R.id.title);
+        num_players = (TextView)findViewById(R.id.num_players);
     }
 
     public void confirm_button(View v){
-        TextView title = (TextView)findViewById(R.id.title);
-        TextView num_players = (TextView)findViewById(R.id.num_players);
-        String people = (String)num_players.getText();
-        int int_people = (int)people.charAt(0) - 48;
+        int current_players = Integer.parseInt(num_players.getText().toString());
 
         Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreen.class);
         Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreen.class);
         Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
 
-        if (int_people == 2) {
+        if (current_players == 2) {
             startActivity(two_player);
-        } else if (int_people == 3) {
+        } else if (current_players == 3) {
             startActivity(three_player);
-        } else {
+        } else if (current_players ==4){
             startActivity(four_player);
         }
     }
 
     public void plus_button(View v){
-        String number = "";
-        TextView num_players = (TextView)findViewById(R.id.num_players);
-        int x = (int)((String)num_players.getText()).charAt(0);
-        if (x < 52) {
-            number += (char) (x + 1);
-            num_players.setText(number);
+        int current_players = Integer.parseInt(num_players.getText().toString());
+        if (current_players < 4) {
+            current_players++;
+            num_players.setText(String.valueOf(current_players));
         }
     }
 
     public void sub_button(View v){
-        String number = "";
-        TextView num_players = (TextView)findViewById(R.id.num_players);
-        int x = (int)((String)num_players.getText()).charAt(0);
-        if (x > 50){
-            number += (char)(x - 1);
-            num_players.setText(number);
+        int current_players = Integer.parseInt(num_players.getText().toString());
+        if (current_players > 2) {
+            current_players--;
+            num_players.setText(String.valueOf(current_players));
         }
     }
 
@@ -69,7 +66,6 @@ public class MainActivity extends ActionBarActivity {
 
         //Hides Action Bar
         getSupportActionBar().hide();
-        //setContentView(R.layout.activity_main);
     }
 
     @Override

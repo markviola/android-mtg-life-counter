@@ -6,12 +6,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class FourPlayerScreen extends ActionBarActivity {
+public class FourPlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_four_player_screen);
+        getSupportActionBar().hide();
+    }
+
+    //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
+    @Override
+    public void resetTotal() {
+        FourPlayerLifeFragment playerOne = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment8);
+        FourPlayerLifeFragment playerTwo = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment9);
+        FourPlayerLifeFragment playerThree = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment10);
+        FourPlayerLifeFragment playerFour = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment11);
+
+        playerOne.resetLife();
+        playerTwo.resetLife();
+        playerThree.resetLife();
+        playerFour.resetLife();
     }
 
     @Override

@@ -6,12 +6,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class ThreePlayerScreen extends ActionBarActivity {
+public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_player_screen);
+        getSupportActionBar().hide();
+    }
+
+    //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
+    @Override
+    public void resetTotal() {
+        ThreePlayerLifeFragment playerOne = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment3);
+        ThreePlayerLifeFragment playerTwo = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
+        ThreePlayerLifeFragment playerThree = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment5);
+
+        playerOne.resetLife();
+        playerTwo.resetLife();
+        playerThree.resetLife();
     }
 
     @Override

@@ -59,4 +59,8 @@ public class ThreePlayerLifeFragment extends Fragment{
             player_life.setText(String.valueOf(current_life));
         }
     }
+
+    public void resetLife(){
+        player_life.setText("20");
+    }
 }

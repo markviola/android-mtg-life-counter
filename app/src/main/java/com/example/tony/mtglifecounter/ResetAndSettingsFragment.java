@@ -16,6 +16,22 @@ public class ResetAndSettingsFragment extends Fragment{
     private static final String TAG = "Tony message";
     Button reset, settings;
 
+    resetListener activityCommander;
+
+    public interface resetListener{
+        public void resetTotal();
+    }
+
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        try{
+            activityCommander = (resetListener) activity;
+        }catch(ClassCastException e){
+            throw new ClassCastException(activity.toString());
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,7 +42,7 @@ public class ResetAndSettingsFragment extends Fragment{
         reset.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View v){
-                        //add_action();
+                        resetClicked(v);
                     }
                 }
         );
@@ -34,11 +50,16 @@ public class ResetAndSettingsFragment extends Fragment{
         settings.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View v){
-                        //sub_action();
+                        //some_action();
                     }
                 }
         );
 
         return view;
+    }
+
+    //Settings button has been clicked
+    public void resetClicked(View view){
+        activityCommander.resetTotal();
     }
 }

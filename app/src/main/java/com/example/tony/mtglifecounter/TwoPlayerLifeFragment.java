@@ -61,4 +61,8 @@ public class TwoPlayerLifeFragment extends Fragment {
         }
     }
 
+    public void resetLife(){
+        player_life.setText("20");
+    }
+
 }
