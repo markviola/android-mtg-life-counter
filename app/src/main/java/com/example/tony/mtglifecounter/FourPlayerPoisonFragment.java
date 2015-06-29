@@ -61,4 +61,17 @@ public class FourPlayerPoisonFragment extends Fragment {
             player_life.setText(String.valueOf(current_life));
         }
     }
+
+    public void resetPoison(){
+
+        player_life.setText("0");
+    }
+
+    public String getPoison(){
+        return player_life.getText().toString();
+    }
+
+    public void setPoison(String poisonValue){
+        player_life.setText(poisonValue);
+    }
 }

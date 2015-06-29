@@ -1,5 +1,6 @@
 package com.example.tony.mtglifecounter;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,9 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
+    ThreePlayerLifeFragment playerOne, playerTwo, playerThree;
+    String playerOneLife, playerTwoLife, playerThreeLife, playerOnePoison, playerTwoPoison, playerThreePoison;
+
     private GestureDetectorCompat gestureDetector;
 
     @Override
@@ -24,6 +28,30 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
         getSupportActionBar().hide();
 
         this.gestureDetector = new GestureDetectorCompat(this,this);
+
+        //References to Player One and Player Two fragments
+        playerOne = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment3);
+        playerTwo = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
+        playerThree = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment5);
+
+        //At the start of the game each player has zero poison counters
+        Bundle dataBundle = getIntent().getExtras();
+        if (dataBundle == null){
+            playerOnePoison = "0";
+            playerTwoPoison = "0";
+            playerThreePoison = "0";
+        } else {
+            playerOneLife = dataBundle.getString("playerOne Life");
+            playerTwoLife = dataBundle.getString("playerTwo Life");
+            playerThreeLife = dataBundle.getString("playerThree Life");
+            playerOnePoison = dataBundle.getString("playerOne Poison");
+            playerTwoPoison = dataBundle.getString("playerTwo Poison");
+            playerThreePoison = dataBundle.getString("playerThree Poison");
+
+            playerOne.setLife(playerOneLife);
+            playerTwo.setLife(playerTwoLife);
+            playerThree.setLife(playerThreeLife);
+        }
     }
 
     /***************************************************************
@@ -61,7 +89,14 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
             float diffX = e2.getX() - e1.getX();
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    resetTotal();
+                    Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreenAlt.class);
+                    three_player.putExtra("playerOne Life", playerOne.getLife());
+                    three_player.putExtra("playerTwo Life", playerTwo.getLife());
+                    three_player.putExtra("playerThree Life", playerThree.getLife());
+                    three_player.putExtra("playerOne Poison", playerOnePoison);
+                    three_player.putExtra("playerTwo Poison", playerTwoPoison);
+                    three_player.putExtra("playerThree Poison", playerThreePoison);
+                    startActivity(three_player);
                 }
             }
             result = true;
@@ -85,13 +120,12 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        ThreePlayerLifeFragment playerOne = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment3);
-        ThreePlayerLifeFragment playerTwo = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
-        ThreePlayerLifeFragment playerThree = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment5);
-
         playerOne.resetLife();
         playerTwo.resetLife();
         playerThree.resetLife();
+        playerOnePoison = "0";
+        playerTwoPoison = "0";
+        playerThreePoison = "0";
     }
 
     @Override
