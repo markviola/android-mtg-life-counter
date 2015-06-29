@@ -65,4 +65,11 @@ public class TwoPlayerLifeFragment extends Fragment {
         player_life.setText("20");
     }
 
+    public String getLife(){
+        return player_life.getText().toString();
+    }
+
+    public void setLife(String lifeValue){
+        player_life.setText(lifeValue);
+    }
 }

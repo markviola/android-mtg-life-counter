@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 
 import android.view.MotionEvent;
 import android.view.GestureDetector;
@@ -11,10 +12,13 @@ import android.support.v4.view.GestureDetectorCompat;
 
 
 public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
-GestureDetector.OnGestureListener{
+        GestureDetector.OnGestureListener{
 
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+    TwoPlayerLifeFragment playerOne, playerTwo;
+    String playerOneLife, playerTwoLife, playerOnePoison, playerTwoPoison;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -22,10 +26,34 @@ GestureDetector.OnGestureListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_player_screen);
-        getSupportActionBar().hide();
+        getSupportActionBar().hide();   //Gets rid of the action bar
 
+        //Dectector for swiping gesture
         this.gestureDetector = new GestureDetectorCompat(this,this);
+
+        //References to Player One and Player Two fragments
+        playerOne = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        playerTwo = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+
+        //At the start of the game each player has zero poison counters
+        Bundle dataBundle = getIntent().getExtras();
+        if (dataBundle == null){
+            playerOnePoison = "0";
+            playerTwoPoison = "0";
+        } else {
+            playerOneLife = dataBundle.getString("playerOne Life");
+            playerTwoLife = dataBundle.getString("playerTwo Life");
+            playerOnePoison = dataBundle.getString("playerOne Poison");
+            playerTwoPoison = dataBundle.getString("playerTwo Poison");
+
+            playerOne.setLife(playerOneLife);
+            playerTwo.setLife(playerTwoLife);
+        }
     }
+
+    /***************************************************************
+     *                  Gesture Overrides Start                    *
+     ***************************************************************/
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -58,7 +86,13 @@ GestureDetector.OnGestureListener{
             float diffX = e2.getX() - e1.getX();
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    resetTotal();
+
+                    Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreenAlt.class);
+                    two_player.putExtra("playerOne Life", playerOne.getLife());
+                    two_player.putExtra("playerTwo Life", playerTwo.getLife());
+                    two_player.putExtra("playerOne Poison", playerOnePoison);
+                    two_player.putExtra("playerTwo Poison", playerTwoPoison);
+                    startActivity(two_player);
                 }
             }
             result = true;
@@ -75,14 +109,17 @@ GestureDetector.OnGestureListener{
         return super.onTouchEvent(event);
     }
 
+    /***************************************************************
+     *                   Gesture Overrides End                     *
+     ***************************************************************/
+
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        TwoPlayerLifeFragment playerOne = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-        TwoPlayerLifeFragment playerTwo = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
-
         playerOne.resetLife();
         playerTwo.resetLife();
+        playerOnePoison = "0";
+        playerTwoPoison = "0";
     }
 
     @Override
