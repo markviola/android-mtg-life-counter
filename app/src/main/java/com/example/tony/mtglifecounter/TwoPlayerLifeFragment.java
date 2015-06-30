@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.util.Log;
-import android.app.Activity;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ import android.widget.TextView;
 public class TwoPlayerLifeFragment extends Fragment {
 
     private static final String TAG = "Tony message";
-    Button add_life_total, sub_life_total;
+    Button add_life_total, sub_life_total, add_life_total_5, sub_life_total_5;
     TextView player_name, player_life;
 
     @Nullable
@@ -25,6 +24,8 @@ public class TwoPlayerLifeFragment extends Fragment {
         View view = inflater.inflate(R.layout.two_player_life_fragment, container, false);
         add_life_total = (Button) view.findViewById(R.id.add_life_total);
         sub_life_total = (Button) view.findViewById(R.id.sub_life_total);
+        add_life_total_5 = (Button) view.findViewById(R.id.add_life_total_5);
+        sub_life_total_5 = (Button) view.findViewById(R.id.sub_life_total_5);
         player_name = (TextView) view.findViewById(R.id.player_name);
         player_life = (TextView) view.findViewById(R.id.player_life);
 
@@ -44,6 +45,22 @@ public class TwoPlayerLifeFragment extends Fragment {
                 }
         );
 
+        add_life_total_5.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View v){
+                        add_5_action();
+                    }
+                }
+        );
+
+        sub_life_total_5.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        sub_5_action();
+                    }
+                }
+        );
+
         return view;
     }
 
@@ -58,6 +75,22 @@ public class TwoPlayerLifeFragment extends Fragment {
         if (current_life > 0) {
             current_life--;
             player_life.setText(String.valueOf(current_life));
+        }
+    }
+
+    public void add_5_action(){
+        int current_life = Integer.parseInt(player_life.getText().toString());
+        current_life += 5;
+        player_life.setText(String.valueOf(current_life));
+    }
+
+    public void sub_5_action(){
+        int current_life = Integer.parseInt(player_life.getText().toString());
+        if (current_life > 4) {
+            current_life -= 5;
+            player_life.setText(String.valueOf(current_life));
+        } else {
+            player_life.setText("0");
         }
     }
 

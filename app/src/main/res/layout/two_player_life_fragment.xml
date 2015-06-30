@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
 
         android:text="Player Name"
         android:textSize="30dp"
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp"
+        android:layout_marginTop="132dp"
 
         android:text="20"
         android:textSize="30dp"
@@ -29,12 +29,13 @@
         android:id="@+id/sub_life_total"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="125dp"
         android:layout_toLeftOf="@+id/player_life"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="25dp"
 
         android:backgroundTint="#0099CC"
-        android:text="-"
+        android:text="-1"
+        android:textColor="#FFFFFF"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="sub_action"/>
 
@@ -42,13 +43,42 @@
         android:id="@+id/add_life_total"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="125dp"
         android:layout_toRightOf="@+id/player_life"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="25dp"
 
         android:backgroundTint="#0099CC"
-        android:text="+"
+        android:text="+1"
+        android:textColor="#FFFFFF"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="add_action"/>
+
+    <Button
+        android:id="@+id/add_life_total_5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="125dp"
+        android:layout_toRightOf="@+id/player_life"
+        android:layout_marginLeft="90dp"
+
+        android:backgroundTint="#0099CC"
+        android:text="+5"
+        android:textColor="#FFFFFF"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="add_5_action" />
+
+    <Button
+        android:id="@+id/sub_life_total_5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="125dp"
+        android:layout_toLeftOf="@+id/player_life"
+        android:layout_marginRight="90dp"
+
+        android:backgroundTint="#0099CC"
+        android:text="-5"
+        android:textColor="#FFFFFF"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="sub_5_action" />
 
 </RelativeLayout>
