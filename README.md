@@ -4,22 +4,10 @@ The MTG Life Counter is an Android app that allows people to easily keep track o
 
 ###Screenshots
 
-Starting Screen:
+Starting screen, life totals screen, and poison counter screen (respectively):
 
 <p align="center">
-  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/main.png?raw=true" alt="Main Page" width="280px" height="498px"/>
-</p>
-
-Two, Three, and Four Player Life Total Screens (respectively):
-
-<p align="center">
-  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/player_screens.jpg?raw=true" alt="Player Screens"/>
-</p>
-
-Two, Three, and Four Player Poison Counter Screens (respectively):
-
-<p align="center">
-  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/player_screens_poison.jpg?raw=true" alt="Player Screens"/>
+  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/all_types_screen.jpg?raw=true" alt="Player Screens"/>
 </p>
 
 

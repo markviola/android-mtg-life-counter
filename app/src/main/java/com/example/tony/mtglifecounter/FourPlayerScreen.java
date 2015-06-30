@@ -1,5 +1,6 @@
 package com.example.tony.mtglifecounter;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,10 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
+    FourPlayerLifeFragment playerOne, playerTwo, playerThree, playerFour;
+    String playerOneLife, playerTwoLife, playerThreeLife, playerFourLife,
+            playerOnePoison, playerTwoPoison, playerThreePoison, playerFourPoison;
+
     private GestureDetectorCompat gestureDetector;
 
     @Override
@@ -25,6 +30,35 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
         getSupportActionBar().hide();
 
         this.gestureDetector = new GestureDetectorCompat(this,this);
+
+        //References to Player One and Player Two fragments
+        playerOne = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment8);
+        playerTwo = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment9);
+        playerThree = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment10);
+        playerFour = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment11);
+
+        //At the start of the game each player has zero poison counters
+        Bundle dataBundle = getIntent().getExtras();
+        if (dataBundle == null){
+            playerOnePoison = "0";
+            playerTwoPoison = "0";
+            playerThreePoison = "0";
+            playerFourPoison = "0";
+        } else {
+            playerOneLife = dataBundle.getString("playerOne Life");
+            playerTwoLife = dataBundle.getString("playerTwo Life");
+            playerThreeLife = dataBundle.getString("playerThree Life");
+            playerFourLife = dataBundle.getString("playerFour Life");
+            playerOnePoison = dataBundle.getString("playerOne Poison");
+            playerTwoPoison = dataBundle.getString("playerTwo Poison");
+            playerThreePoison = dataBundle.getString("playerThree Poison");
+            playerFourPoison = dataBundle.getString("playerFour Poison");
+
+            playerOne.setLife(playerOneLife);
+            playerTwo.setLife(playerTwoLife);
+            playerThree.setLife(playerThreeLife);
+            playerFour.setLife(playerFourLife);
+        }
     }
 
     /***************************************************************
@@ -62,7 +96,16 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
             float diffX = e2.getX() - e1.getX();
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    resetTotal();
+                    Intent four_player = new Intent(getApplicationContext(), FourPlayerScreenAlt.class);
+                    four_player.putExtra("playerOne Life", playerOne.getLife());
+                    four_player.putExtra("playerTwo Life", playerTwo.getLife());
+                    four_player.putExtra("playerThree Life", playerThree.getLife());
+                    four_player.putExtra("playerFour Life", playerFour.getLife());
+                    four_player.putExtra("playerOne Poison", playerOnePoison);
+                    four_player.putExtra("playerTwo Poison", playerTwoPoison);
+                    four_player.putExtra("playerThree Poison", playerThreePoison);
+                    four_player.putExtra("playerFour Poison", playerFourPoison);
+                    startActivity(four_player);
                 }
             }
             result = true;
@@ -79,23 +122,31 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
         return super.onTouchEvent(event);
     }
 
+    /***************************************************************
+     *                   Gesture Overrides End                     *
+     ***************************************************************/
+
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        FourPlayerLifeFragment playerOne = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment8);
-        FourPlayerLifeFragment playerTwo = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment9);
-        FourPlayerLifeFragment playerThree = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment10);
-        FourPlayerLifeFragment playerFour = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment11);
-
         playerOne.resetLife();
         playerTwo.resetLife();
         playerThree.resetLife();
         playerFour.resetLife();
+        playerOnePoison = "0";
+        playerTwoPoison = "0";
+        playerThreePoison = "0";
+        playerFourPoison = "0";
     }
 
-    /***************************************************************
-     *                   Gesture Overrides End                     *
-     ***************************************************************/
+    //Gets rid of the issue with pressing the back button when too many life/poison activities
+    @Override
+    public void onBackPressed() {
+        //Include the code here
+        Intent back_to_main = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(back_to_main);
+        return;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

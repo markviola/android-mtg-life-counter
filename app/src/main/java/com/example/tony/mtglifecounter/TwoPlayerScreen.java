@@ -122,6 +122,15 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         playerTwoPoison = "0";
     }
 
+    //Gets rid of the issue with pressing the back button when too many life/poison activities
+    @Override
+    public void onBackPressed() {
+        //Include the code here
+        Intent back_to_main = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(back_to_main);
+        return;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
