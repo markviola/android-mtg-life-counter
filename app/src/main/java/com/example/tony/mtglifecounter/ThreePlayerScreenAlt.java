@@ -126,7 +126,6 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
     //Gets rid of the issue with pressing the back button when too many life/poison activities
     @Override
     public void onBackPressed() {
-        //Include the code here
         Intent back_to_main = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(back_to_main);
         return;

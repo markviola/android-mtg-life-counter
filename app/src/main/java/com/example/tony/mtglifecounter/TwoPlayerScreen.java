@@ -28,7 +28,7 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         setContentView(R.layout.activity_two_player_screen);
         getSupportActionBar().hide();   //Gets rid of the action bar
 
-        //Dectector for swiping gesture
+        //Detector for swiping gesture
         this.gestureDetector = new GestureDetectorCompat(this,this);
 
         //References to Player One and Player Two fragments
@@ -125,7 +125,6 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
     //Gets rid of the issue with pressing the back button when too many life/poison activities
     @Override
     public void onBackPressed() {
-        //Include the code here
         Intent back_to_main = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(back_to_main);
         return;
