@@ -40,6 +40,10 @@
             android:name=".FourPlayerScreenAlt"
             android:label="@string/title_activity_four_player_screen_alt" >
         </activity>
+        <activity
+            android:name=".Settings"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

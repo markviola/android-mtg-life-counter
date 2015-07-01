@@ -1,0 +1,54 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
+    android:orientation="vertical"
+    tools:context="com.example.tony.mtglifecounter.FourPlayerScreen">
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2375"
+        android:name="com.example.tony.mtglifecounter.SettingsPlayerFragment"
+        android:id="@+id/fragment25"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/settings_player_fragment" />
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2375"
+        android:name="com.example.tony.mtglifecounter.SettingsPlayerFragment"
+        android:id="@+id/fragment26"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/settings_player_fragment" />
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2375"
+        android:name="com.example.tony.mtglifecounter.SettingsPlayerFragment"
+        android:id="@+id/fragment27"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/settings_player_fragment" />
+
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2375"
+        android:name="com.example.tony.mtglifecounter.SettingsPlayerFragment"
+        android:id="@+id/fragment28"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/settings_player_fragment" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        android:id="@+id/confirm_button"
+        android:text="CONFIRM SETTINGS"
+        android:background="#FFFFFF"
+        android:backgroundTint="#DDDDDD" />
+</LinearLayout>
