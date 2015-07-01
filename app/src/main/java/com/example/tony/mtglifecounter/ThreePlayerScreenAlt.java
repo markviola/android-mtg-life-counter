@@ -6,19 +6,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.support.v4.view.GestureDetectorCompat;
 
 
 public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
-        GestureDetector.OnGestureListener{
+        ResetAndSettingsFragment.settingsListener, GestureDetector.OnGestureListener{
 
+    private static final String TAG = "Tony message";
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     ThreePlayerPoisonFragment playerOne, playerTwo, playerThree;
-    String playerOneLife, playerTwoLife, playerThreeLife, playerOnePoison, playerTwoPoison, playerThreePoison;
+    String playerOneLife, playerTwoLife, playerThreeLife,
+            playerOnePoison, playerTwoPoison, playerThreePoison;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -26,6 +29,7 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_player_screen_alt);
+        Log.i(TAG, "onCreate FourPlayerScreenAlt");
         getSupportActionBar().hide();
 
         //Dectector for swiping gesture
@@ -114,6 +118,7 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
      *                   Gesture Overrides End                     *
      ***************************************************************/
 
+    @Override
     public void resetTotal() {
         playerOne.resetPoison();
         playerTwo.resetPoison();
@@ -121,6 +126,11 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
         playerOneLife = "20";
         playerTwoLife = "20";
         playerThreeLife = "20";
+    }
+
+    @Override
+    public void toSettings() {
+
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

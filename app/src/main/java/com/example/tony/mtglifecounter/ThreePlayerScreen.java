@@ -1,23 +1,27 @@
 package com.example.tony.mtglifecounter;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.support.v4.view.GestureDetectorCompat;
 
-public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
-        GestureDetector.OnGestureListener{
 
+public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
+        ResetAndSettingsFragment.settingsListener, GestureDetector.OnGestureListener{
+
+    private static final String TAG = "Tony message";
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     ThreePlayerLifeFragment playerOne, playerTwo, playerThree;
-    String playerOneLife, playerTwoLife, playerThreeLife, playerOnePoison, playerTwoPoison, playerThreePoison;
+    String playerOneLife, playerTwoLife, playerThreeLife,
+            playerOnePoison, playerTwoPoison, playerThreePoison;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -25,6 +29,7 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_player_screen);
+        Log.i(TAG, "onCreate ThreePlayerScreen");
         getSupportActionBar().hide();
 
         this.gestureDetector = new GestureDetectorCompat(this,this);
@@ -126,6 +131,11 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
         playerOnePoison = "0";
         playerTwoPoison = "0";
         playerThreePoison = "0";
+    }
+
+    @Override
+    public void toSettings() {
+
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

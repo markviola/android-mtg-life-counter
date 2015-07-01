@@ -1,19 +1,21 @@
 package com.example.tony.mtglifecounter;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.support.v4.view.GestureDetectorCompat;
 
 
 public class FourPlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
-        GestureDetector.OnGestureListener{
+        ResetAndSettingsFragment.settingsListener, GestureDetector.OnGestureListener{
 
+    private static final String TAG = "Tony message";
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -27,6 +29,7 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_four_player_screen);
+        Log.i(TAG, "onCreate FourPlayerScreen");
         getSupportActionBar().hide();
 
         this.gestureDetector = new GestureDetectorCompat(this,this);
@@ -137,6 +140,11 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
         playerTwoPoison = "0";
         playerThreePoison = "0";
         playerFourPoison = "0";
+    }
+
+    @Override
+    public void toSettings() {
+
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

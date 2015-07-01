@@ -6,14 +6,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.support.v4.view.GestureDetectorCompat;
 
 
 public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
-        GestureDetector.OnGestureListener{
+        ResetAndSettingsFragment.settingsListener, GestureDetector.OnGestureListener{
 
+    private static final String TAG = "Tony message";
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -26,6 +28,7 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_player_screen);
+        Log.i(TAG, "onCreate TwoPlayerScreen");
         getSupportActionBar().hide();   //Gets rid of the action bar
 
         //Detector for swiping gesture
@@ -120,6 +123,11 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         playerTwo.resetLife();
         playerOnePoison = "0";
         playerTwoPoison = "0";
+    }
+
+    @Override
+    public void toSettings() {
+
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

@@ -41,6 +41,7 @@ public class ResetAndSettingsFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView ResetAndSettingsFragment");
         View view = inflater.inflate(R.layout.reset_and_settings_fragment, container, false);
         reset = (Button) view.findViewById(R.id.reset_button);
         settings = (Button) view.findViewById(R.id.settings_button);

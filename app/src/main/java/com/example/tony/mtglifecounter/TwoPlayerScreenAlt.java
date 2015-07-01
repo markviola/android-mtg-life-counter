@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.support.v4.view.GestureDetectorCompat;
 
 
 public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
-        GestureDetector.OnGestureListener{
+        ResetAndSettingsFragment.settingsListener, GestureDetector.OnGestureListener{
 
+    private static final String TAG = "Tony message";
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -26,6 +28,7 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_player_screen_alt);
+        Log.i(TAG, "onCreate FourPlayerScreenAlt");
         getSupportActionBar().hide();
 
         //Dectector for swiping gesture
@@ -108,11 +111,17 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
      *                   Gesture Overrides End                     *
      ***************************************************************/
 
+    @Override
     public void resetTotal() {
         playerOne.resetPoison();
         playerTwo.resetPoison();
         playerOneLife = "20";
         playerTwoLife = "20";
+    }
+
+    @Override
+    public void toSettings() {
+
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

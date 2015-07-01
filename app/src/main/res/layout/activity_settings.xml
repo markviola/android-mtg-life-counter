@@ -47,8 +47,9 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.05"
-        android:id="@+id/confirm_button"
+        android:id="@+id/confirm_settings_button"
         android:text="CONFIRM SETTINGS"
         android:background="#FFFFFF"
-        android:backgroundTint="#DDDDDD" />
+        android:backgroundTint="#DDDDDD"
+        android:onClick="confirmButton"/>
 </LinearLayout>

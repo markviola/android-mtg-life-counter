@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class ThreePlayerPoisonFragment extends Fragment{
 
     private static final String TAG = "Tony message";
-    Button add_life_total, sub_life_total;
+    Button add_life_total, sub_life_total, add_life_total_3, sub_life_total_3;
     TextView player_name, player_life;
 
     @Nullable
@@ -24,6 +24,8 @@ public class ThreePlayerPoisonFragment extends Fragment{
         View view = inflater.inflate(R.layout.three_player_poison_fragment, container, false);
         add_life_total = (Button) view.findViewById(R.id.add_life_total);
         sub_life_total = (Button) view.findViewById(R.id.sub_life_total);
+        add_life_total_3 = (Button) view.findViewById(R.id.add_life_total_3);
+        sub_life_total_3 = (Button) view.findViewById(R.id.sub_life_total_3);
         player_name = (TextView) view.findViewById(R.id.player_name);
         player_life = (TextView) view.findViewById(R.id.player_life);
 
@@ -39,6 +41,22 @@ public class ThreePlayerPoisonFragment extends Fragment{
                 new View.OnClickListener(){
                     public void onClick(View v){
                         sub_action();
+                    }
+                }
+        );
+
+        add_life_total_3.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View v){
+                        add_3_action();
+                    }
+                }
+        );
+
+        sub_life_total_3.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View v){
+                        sub_3_action();
                     }
                 }
         );
@@ -62,10 +80,27 @@ public class ThreePlayerPoisonFragment extends Fragment{
         }
     }
 
-    public void resetPoison(){
-
-        player_life.setText("0");
+    public void add_3_action(){
+        int current_life = Integer.parseInt(player_life.getText().toString());
+        if (current_life <= 7) {
+            current_life += 3;
+        } else {
+            current_life = 10;
+        }
+        player_life.setText(String.valueOf(current_life));
     }
+
+    public void sub_3_action(){
+        int current_life = Integer.parseInt(player_life.getText().toString());
+        if (current_life >= 3) {
+            current_life -= 3;
+        } else {
+            current_life = 0;
+        }
+        player_life.setText(String.valueOf(current_life));
+    }
+
+    public void resetPoison(){player_life.setText("0");}
 
     public String getPoison(){
         return player_life.getText().toString();

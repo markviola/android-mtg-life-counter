@@ -31,12 +31,11 @@
         android:layout_height="40dp"
         android:layout_marginTop="85dp"
         android:layout_toLeftOf="@+id/player_life"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="25dp"
 
         android:backgroundTint="#CC6699"
-        android:text="-"
-        android:gravity="center_vertical|center_horizontal"
-        android:onClick="sub_action"/>
+        android:text="-1"
+        android:gravity="center_vertical|center_horizontal"/>
 
     <Button
         android:id="@+id/add_life_total"
@@ -44,11 +43,34 @@
         android:layout_height="40dp"
         android:layout_marginTop="85dp"
         android:layout_toRightOf="@+id/player_life"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="25dp"
 
         android:backgroundTint="#CC6699"
-        android:text="+"
-        android:gravity="center_vertical|center_horizontal"
-        android:onClick="add_action"/>
+        android:text="+1"
+        android:gravity="center_vertical|center_horizontal"/>
+
+    <Button
+        android:id="@+id/sub_life_total_3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="85dp"
+        android:layout_toLeftOf="@+id/player_life"
+        android:layout_marginRight="90dp"
+
+        android:backgroundTint="#CC6699"
+        android:text="-3"
+        android:gravity="center_vertical|center_horizontal"/>
+
+    <Button
+        android:id="@+id/add_life_total_3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="85dp"
+        android:layout_toRightOf="@+id/player_life"
+        android:layout_marginLeft="90dp"
+
+        android:backgroundTint="#CC6699"
+        android:text="+3"
+        android:gravity="center_vertical|center_horizontal"/>
 
 </RelativeLayout>
