@@ -12,6 +12,4 @@ Starting screen, life totals screen, and poison counter screen (respectively):
 
 
 ###To-do List:
-* Add endgame screen
-* Add settings page
-* Allow for custom player color schemes
+* Add settings page to change player names

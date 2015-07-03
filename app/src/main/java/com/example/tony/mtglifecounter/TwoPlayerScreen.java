@@ -21,6 +21,7 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
 
     TwoPlayerLifeFragment playerOne, playerTwo;
     String playerOneLife, playerTwoLife, playerOnePoison, playerTwoPoison;
+    String newPlayerOneName, newPlayerTwoName;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -51,6 +52,14 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
 
             playerOne.setLife(playerOneLife);
             playerTwo.setLife(playerTwoLife);
+
+            newPlayerOneName = dataBundle.getString("newPlayerOneName");
+            newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
+        }
+
+        if (newPlayerOneName != null && newPlayerTwoName != null){
+            playerOne.setName(newPlayerOneName);
+            playerTwo.setName(newPlayerTwoName);
         }
     }
 
@@ -128,6 +137,16 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
     @Override
     public void toSettings() {
 
+        Intent settings = new Intent(getApplicationContext(), Settings.class);
+
+        settings.putExtra("playerOne Life", playerOne.getLife());
+        settings.putExtra("playerTwo Life", playerTwo.getLife());
+        settings.putExtra("playerOne Poison", playerOnePoison);
+        settings.putExtra("playerTwo Poison", playerTwoPoison);
+        settings.putExtra("returnTo", "TwoPlayerScreen");
+        settings.putExtra("numPlayers", 2);
+
+        startActivity(settings);
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

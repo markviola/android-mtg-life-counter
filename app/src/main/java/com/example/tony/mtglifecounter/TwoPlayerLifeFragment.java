@@ -105,4 +105,8 @@ public class TwoPlayerLifeFragment extends Fragment {
     public void setLife(String lifeValue){
         player_life.setText(lifeValue);
     }
+
+    public void setName(String newName){
+        player_name.setText(newName);
+    }
 }
