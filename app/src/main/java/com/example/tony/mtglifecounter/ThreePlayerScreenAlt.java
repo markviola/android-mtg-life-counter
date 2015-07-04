@@ -130,7 +130,18 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
 
     @Override
     public void toSettings() {
+        Intent settings = new Intent(getApplicationContext(), Settings.class);
 
+        settings.putExtra("playerOne Life", playerOneLife);
+        settings.putExtra("playerTwo Life", playerTwoLife);
+        settings.putExtra("playerThree Life", playerThreeLife);
+        settings.putExtra("playerOne Poison", playerOne.getPoison());
+        settings.putExtra("playerTwo Poison", playerTwo.getPoison());
+        settings.putExtra("playerThree Poison", playerThree.getPoison());
+        settings.putExtra("returnTo", "ThreePlayerScreenAlt");
+        settings.putExtra("numPlayers", 3);
+
+        startActivity(settings);
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

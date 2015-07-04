@@ -121,7 +121,16 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
 
     @Override
     public void toSettings() {
+        Intent settings = new Intent(getApplicationContext(), Settings.class);
 
+        settings.putExtra("playerOne Life", playerOneLife);
+        settings.putExtra("playerTwo Life", playerTwoLife);
+        settings.putExtra("playerOne Poison", playerOne.getPoison());
+        settings.putExtra("playerTwo Poison", playerTwo.getPoison());
+        settings.putExtra("returnTo", "TwoPlayerScreenAlt");
+        settings.putExtra("numPlayers", 2);
+
+        startActivity(settings);
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

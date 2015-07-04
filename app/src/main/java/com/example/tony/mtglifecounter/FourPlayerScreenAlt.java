@@ -136,7 +136,20 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
 
     @Override
     public void toSettings() {
+        Intent settings = new Intent(getApplicationContext(), Settings.class);
 
+        settings.putExtra("playerOne Life", playerOneLife);
+        settings.putExtra("playerTwo Life", playerTwoLife);
+        settings.putExtra("playerThree Life", playerThreeLife);
+        settings.putExtra("playerFour Life", playerFourLife);
+        settings.putExtra("playerOne Poison", playerOne.getPoison());
+        settings.putExtra("playerTwo Poison", playerTwo.getPoison());
+        settings.putExtra("playerThree Poison", playerThree.getPoison());
+        settings.putExtra("playerThree Poison", playerFour.getPoison());
+        settings.putExtra("returnTo", "FourPlayerScreenAlt");
+        settings.putExtra("numPlayers", 4);
+
+        startActivity(settings);
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

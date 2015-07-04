@@ -16,8 +16,6 @@ public class Settings extends ActionBarActivity {
     SettingsPlayerFragment playerOne, playerTwo, playerThree, playerFour;
     String playerOneLife, playerTwoLife, playerThreeLife, playerFourLife,
             playerOnePoison, playerTwoPoison, playerThreePoison, playerFourPoison;
-    Intent mainScreen, twoPlayerLifeScreen, threePlayerLifeScreen, fourPlayerLifeScreen,
-            twoPlayerPoisonScreen, threePlayerPoisonScreen, fourPlayerPoisonScreen;
     Bundle dataBundle;
     int numPlayers;
 
@@ -38,14 +36,6 @@ public class Settings extends ActionBarActivity {
         playerTwo.setPlayerNumber("2");
         playerThree.setPlayerNumber("3");
         playerFour.setPlayerNumber("4");
-
-        mainScreen = new Intent(getApplicationContext(), MainActivity.class);
-        twoPlayerLifeScreen = new Intent(getApplicationContext(), TwoPlayerScreen.class);
-        twoPlayerPoisonScreen = new Intent(getApplicationContext(), TwoPlayerScreenAlt.class);
-        threePlayerLifeScreen = new Intent(getApplicationContext(), ThreePlayerScreen.class);
-        threePlayerPoisonScreen = new Intent(getApplicationContext(), ThreePlayerScreenAlt.class);
-        fourPlayerLifeScreen = new Intent(getApplicationContext(), FourPlayerScreen.class);
-        fourPlayerPoisonScreen = new Intent(getApplicationContext(), FourPlayerScreenAlt.class);
 
         dataBundle = getIntent().getExtras();
         numPlayers = dataBundle.getInt("numPlayers");
@@ -93,31 +83,57 @@ public class Settings extends ActionBarActivity {
 
     public void confirmButton(View v){
         String returnTo = dataBundle.getString("returnTo");
-        Intent returnToIntent = new Intent(getApplicationContext(), TwoPlayerScreen.class);
+        Intent returnToIntent;
 
+        //Determine the correct activity to exit back to
         switch(returnTo){
             case "TwoPlayerScreen":
+                returnToIntent = new Intent(getApplicationContext(), TwoPlayerScreen.class);
+                break;
+            case "TwoPlayerScreenAlt":
+                returnToIntent = new Intent(getApplicationContext(), TwoPlayerScreenAlt.class);
+                break;
+            case "ThreePlayerScreen":
+                returnToIntent = new Intent(getApplicationContext(), ThreePlayerScreen.class);
+                break;
+            case "ThreePlayerScreenAlt":
+                returnToIntent = new Intent(getApplicationContext(), ThreePlayerScreenAlt.class);
+                break;
+            case "FourPlayerScreen":
+                returnToIntent = new Intent(getApplicationContext(), FourPlayerScreen.class);
+                break;
+            case "FourPlayerScreenAlt":
+                returnToIntent = new Intent(getApplicationContext(), FourPlayerScreenAlt.class);
+                break;
+            default:
+                returnToIntent = new Intent(getApplicationContext(), MainActivity.class);
+        }
+
+        //Add all of the necessary information to send back to te returned activity
+        switch(returnTo){
+            case "FourPlayerScreen":
+            case "FourPlayerScreenAlt":
+                returnToIntent.putExtra("newPlayerFourName", playerFour.getNewName());
+                returnToIntent.putExtra("playerFour Life", playerFourLife);
+                returnToIntent.putExtra("playerFour Poison", playerFourPoison);
+            case "ThreePlayerScreen":
+            case "ThreePlayerScreenAlt":
+                returnToIntent.putExtra("newPlayerThreeName", playerThree.getNewName());
+                returnToIntent.putExtra("playerThree Life", playerThreeLife);
+                returnToIntent.putExtra("playerThree Poison", playerThreePoison);
+            case "TwoPlayerScreen":
+            case "TwoPlayerScreenAlt":
                 returnToIntent.putExtra("newPlayerOneName", playerOne.getNewName());
                 returnToIntent.putExtra("newPlayerTwoName", playerTwo.getNewName());
                 returnToIntent.putExtra("playerOne Life", playerOneLife);
                 returnToIntent.putExtra("playerTwo Life", playerTwoLife);
                 returnToIntent.putExtra("playerOne Poison", playerOnePoison);
                 returnToIntent.putExtra("playerTwo Poison", playerTwoPoison);
-            case "TwoPlayerScreenAlt":
-                startActivity(twoPlayerPoisonScreen);
-            case "ThreePlayerScreen":
-                startActivity(threePlayerLifeScreen);
-            case "ThreePlayerScreenAlt":
-                startActivity(threePlayerPoisonScreen);
-            case "FourPlayerScreen":
-                startActivity(fourPlayerLifeScreen);
-            case "FourPlayerScreenAlt":
-                startActivity(fourPlayerPoisonScreen);
+                break;
             default:
-                startActivity(mainScreen);
+                startActivity(returnToIntent);
         }
 
         startActivity(returnToIntent);
-
     }
 }
