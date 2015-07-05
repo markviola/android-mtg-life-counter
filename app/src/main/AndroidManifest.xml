@@ -9,7 +9,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,31 +19,38 @@
         </activity>
         <activity
             android:name=".TwoPlayerScreen"
-            android:label="@string/title_activity_two_player_screen" >
+            android:label="@string/title_activity_two_player_screen"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ThreePlayerScreen"
-            android:label="@string/title_activity_three_player_screen" >
+            android:label="@string/title_activity_three_player_screen"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".FourPlayerScreen"
-            android:label="@string/title_activity_four_player_screen" >
+            android:label="@string/title_activity_four_player_screen"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".TwoPlayerScreenAlt"
-            android:label="@string/title_activity_two_player_screen_alt" >
+            android:label="@string/title_activity_two_player_screen_alt"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ThreePlayerScreenAlt"
-            android:label="@string/title_activity_three_player_screen_alt" >
+            android:label="@string/title_activity_three_player_screen_alt"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".FourPlayerScreenAlt"
-            android:label="@string/title_activity_four_player_screen_alt" >
+            android:label="@string/title_activity_four_player_screen_alt"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Settings"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

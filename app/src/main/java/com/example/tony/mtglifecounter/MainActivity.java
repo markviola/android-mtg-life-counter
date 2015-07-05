@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.view.View;
 
@@ -15,6 +16,7 @@ public class MainActivity extends ActionBarActivity{
 
     private static final String TAG = "Tony message";
     TextView num_players, title;
+    CheckBox gameTimer, invertedSecondPlayer;
     DBManager dbManager;
 
     @Override
@@ -25,6 +27,8 @@ public class MainActivity extends ActionBarActivity{
 
         title = (TextView)findViewById(R.id.title);
         num_players = (TextView)findViewById(R.id.num_players);
+        gameTimer = (CheckBox) findViewById(R.id.addTimerBox);
+        invertedSecondPlayer = (CheckBox) findViewById(R.id.invertSecondPlayerBox);
         dbManager = new DBManager(this, null, null, 1);
 
         //Only allow four rows to be created for each player; prevents duplicates
@@ -90,6 +94,9 @@ public class MainActivity extends ActionBarActivity{
             current_players++;
             num_players.setText(String.valueOf(current_players));
         }
+
+        //Any player increment leads to a player number greater than two, so hide checkbox
+        invertedSecondPlayer.setVisibility(View.GONE);
     }
 
     public void sub_button(View v){
@@ -97,6 +104,11 @@ public class MainActivity extends ActionBarActivity{
         if (current_players > 2) {
             current_players--;
             num_players.setText(String.valueOf(current_players));
+        }
+
+        //Only show the inverted second player option when two players is the current choice
+        if (current_players == 2){
+            invertedSecondPlayer.setVisibility(View.VISIBLE);
         }
     }
 

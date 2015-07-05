@@ -129,9 +129,9 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
         dbManager.updatePoison(3, "0");
         dbManager.updatePoison(4, "0");
 
-        playerOne.setPoison(dbManager.dbGetLife(1));
-        playerTwo.setPoison(dbManager.dbGetLife(2));
-        playerThree.setPoison(dbManager.dbGetLife(3));
+        playerOne.setPoison(dbManager.dbGetPoison(1));
+        playerTwo.setPoison(dbManager.dbGetPoison(2));
+        playerThree.setPoison(dbManager.dbGetPoison(3));
         playerFour.setPoison(dbManager.dbGetPoison(4));
     }
 

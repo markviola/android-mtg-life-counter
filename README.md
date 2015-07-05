@@ -18,8 +18,8 @@ Pressing the Reset button will change all life totals back to "20" and all poiso
 
 
 ###To-do List:
-* Incorporate SQL to create a database for all player information
 * Include option where the orientation of the player screen is rotated 180 degrees so that in two player mode the opponent can change the total themself
 * Consolidate player life total and poison counter fragments so there is only one standard fragment that can be used for all numbers of players
 * Add activity where the user can see a record of life total changes (Use services to check length between inputs?)
 * Add feature for when a player gets eliminated, it takes the user to a defeat screen then goes to a new activity with [player # - 1] people
+* Add text-to-speech for defeat screen
