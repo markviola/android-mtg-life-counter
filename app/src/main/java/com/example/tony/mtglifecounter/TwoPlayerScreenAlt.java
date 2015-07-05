@@ -22,6 +22,7 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
     TwoPlayerPoisonFragment playerOne, playerTwo;
     String playerOneLife, playerTwoLife, playerOnePoison, playerTwoPoison;
     String newPlayerOneName, newPlayerTwoName;
+    DBManager dbManager;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -32,6 +33,9 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
         Log.i(TAG, "onCreate FourPlayerScreenAlt");
         getSupportActionBar().hide();
 
+        //Allows the use of the database containing all the player information
+        dbManager = new DBManager(this, null, null, 1);
+
         //Dectector for swiping gesture
         this.gestureDetector = new GestureDetectorCompat(this,this);
 
@@ -39,24 +43,11 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
         playerOne = (TwoPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment13);
         playerTwo = (TwoPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment14);
 
-        //Get the pushed data
-        Bundle dataBundle = getIntent().getExtras();
-        playerOneLife = dataBundle.getString("playerOne Life");
-        playerTwoLife = dataBundle.getString("playerTwo Life");
-        playerOnePoison= dataBundle.getString("playerOne Poison");
-        playerTwoPoison = dataBundle.getString("playerTwo Poison");
-
-        playerOne.setPoison(playerOnePoison);
-        playerTwo.setPoison(playerTwoPoison);
-
-        newPlayerOneName = dataBundle.getString("newPlayerOneName");
-        newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
-
-
-        if (newPlayerOneName != null && newPlayerTwoName != null){
-            playerOne.setName(newPlayerOneName);
-            playerTwo.setName(newPlayerTwoName);
-        }
+        //Get data from the MTGDatabase
+        playerOne.setPoison(dbManager.dbGetPoison(1));
+        playerTwo.setPoison(dbManager.dbGetPoison(2));
+        playerOne.setName(dbManager.dbGetName(1));
+        playerTwo.setName(dbManager.dbGetName(2));
     }
 
     /***************************************************************
@@ -94,11 +85,9 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
             float diffX = e2.getX() - e1.getX();
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    dbManager.updatePoison(1, playerOne.getPoison());
+                    dbManager.updatePoison(2, playerTwo.getPoison());
                     Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreen.class);
-                    two_player.putExtra("playerOne Life", playerOneLife);
-                    two_player.putExtra("playerTwo Life", playerTwoLife);
-                    two_player.putExtra("playerOne Poison", playerOne.getPoison());
-                    two_player.putExtra("playerTwo Poison", playerTwo.getPoison());
                     startActivity(two_player);
                 }
             }
@@ -120,25 +109,30 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
      *                   Gesture Overrides End                     *
      ***************************************************************/
 
+    //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        playerOne.resetPoison();
-        playerTwo.resetPoison();
-        playerOneLife = "20";
-        playerTwoLife = "20";
+        dbManager.updateLife(1, "20");
+        dbManager.updateLife(2, "20");
+        dbManager.updateLife(3, "20");
+        dbManager.updateLife(4, "20");
+
+        dbManager.updatePoison(1, "0");
+        dbManager.updatePoison(2, "0");
+        dbManager.updatePoison(3, "0");
+        dbManager.updatePoison(4, "0");
+
+        playerOne.setPoison(dbManager.dbGetPoison(1));
+        playerTwo.setPoison(dbManager.dbGetPoison(2));
     }
 
+    //This gets called by the ResetAndSettingsFragment when "Settings" is clicked
     @Override
     public void toSettings() {
         Intent settings = new Intent(getApplicationContext(), Settings.class);
-
-        settings.putExtra("playerOne Life", playerOneLife);
-        settings.putExtra("playerTwo Life", playerTwoLife);
-        settings.putExtra("playerOne Poison", playerOne.getPoison());
-        settings.putExtra("playerTwo Poison", playerTwo.getPoison());
+        dbManager.updatePoison(1, playerOne.getPoison());
+        dbManager.updatePoison(2, playerTwo.getPoison());
         settings.putExtra("returnTo", "TwoPlayerScreenAlt");
-        settings.putExtra("numPlayers", 2);
-
         startActivity(settings);
     }
 

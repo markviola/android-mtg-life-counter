@@ -20,9 +20,7 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     ThreePlayerPoisonFragment playerOne, playerTwo, playerThree;
-    String playerOneLife, playerTwoLife, playerThreeLife,
-            playerOnePoison, playerTwoPoison, playerThreePoison;
-    String newPlayerOneName, newPlayerTwoName, newPlayerThreeName;
+    DBManager dbManager;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -33,6 +31,9 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
         Log.i(TAG, "onCreate FourPlayerScreenAlt");
         getSupportActionBar().hide();
 
+        //Allows the use of the database containing all the player information
+        dbManager = new DBManager(this, null, null, 1);
+
         //Dectector for swiping gesture
         this.gestureDetector = new GestureDetectorCompat(this,this);
 
@@ -41,28 +42,13 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
         playerTwo = (ThreePlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment17);
         playerThree = (ThreePlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment18);
 
-        //Get the pushed data
-        Bundle dataBundle = getIntent().getExtras();
-        playerOneLife = dataBundle.getString("playerOne Life");
-        playerTwoLife = dataBundle.getString("playerTwo Life");
-        playerThreeLife = dataBundle.getString("playerThree Life");
-        playerOnePoison = dataBundle.getString("playerOne Poison");
-        playerTwoPoison = dataBundle.getString("playerTwo Poison");
-        playerThreePoison = dataBundle.getString("playerThree Poison");
-
-        playerOne.setPoison(playerOnePoison);
-        playerTwo.setPoison(playerTwoPoison);
-        playerThree.setPoison(playerThreePoison);
-
-        newPlayerOneName = dataBundle.getString("newPlayerOneName");
-        newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
-        newPlayerThreeName = dataBundle.getString("newPlayerThreeName");
-
-        if (newPlayerOneName != null && newPlayerTwoName != null && newPlayerThreeName != null){
-            playerOne.setName(newPlayerOneName);
-            playerTwo.setName(newPlayerTwoName);
-            playerThree.setName(newPlayerThreeName);
-        }
+        //Get data from the MTGDatabase
+        playerOne.setPoison(dbManager.dbGetPoison(1));
+        playerTwo.setPoison(dbManager.dbGetPoison(2));
+        playerThree.setPoison(dbManager.dbGetPoison(3));
+        playerOne.setName(dbManager.dbGetName(1));
+        playerTwo.setName(dbManager.dbGetName(2));
+        playerThree.setName(dbManager.dbGetName(3));
     }
 
     /***************************************************************
@@ -101,12 +87,9 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                     Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreen.class);
-                    three_player.putExtra("playerOne Life", playerOneLife);
-                    three_player.putExtra("playerTwo Life", playerTwoLife);
-                    three_player.putExtra("playerThree Life", playerThreeLife);
-                    three_player.putExtra("playerOne Poison", playerOne.getPoison());
-                    three_player.putExtra("playerTwo Poison", playerTwo.getPoison());
-                    three_player.putExtra("playerThree Poison", playerThree.getPoison());
+                    dbManager.updatePoison(1, playerOne.getPoison());
+                    dbManager.updatePoison(2, playerTwo.getPoison());
+                    dbManager.updatePoison(3, playerThree.getPoison());
                     startActivity(three_player);
                 }
             }
@@ -128,29 +111,32 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
      *                   Gesture Overrides End                     *
      ***************************************************************/
 
+    //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        playerOne.resetPoison();
-        playerTwo.resetPoison();
-        playerThree.resetPoison();
-        playerOneLife = "20";
-        playerTwoLife = "20";
-        playerThreeLife = "20";
+        dbManager.updateLife(1, "20");
+        dbManager.updateLife(2, "20");
+        dbManager.updateLife(3, "20");
+        dbManager.updateLife(4, "20");
+
+        dbManager.updatePoison(1, "0");
+        dbManager.updatePoison(2, "0");
+        dbManager.updatePoison(3, "0");
+        dbManager.updatePoison(4, "0");
+
+        playerOne.setPoison(dbManager.dbGetLife(1));
+        playerTwo.setPoison(dbManager.dbGetLife(2));
+        playerThree.setPoison(dbManager.dbGetLife(3));
     }
 
+    //This gets called by the ResetAndSettingsFragment when "Settings" is clicked
     @Override
     public void toSettings() {
         Intent settings = new Intent(getApplicationContext(), Settings.class);
-
-        settings.putExtra("playerOne Life", playerOneLife);
-        settings.putExtra("playerTwo Life", playerTwoLife);
-        settings.putExtra("playerThree Life", playerThreeLife);
-        settings.putExtra("playerOne Poison", playerOne.getPoison());
-        settings.putExtra("playerTwo Poison", playerTwo.getPoison());
-        settings.putExtra("playerThree Poison", playerThree.getPoison());
+        dbManager.updatePoison(1, playerOne.getPoison());
+        dbManager.updatePoison(2, playerTwo.getPoison());
+        dbManager.updatePoison(3, playerThree.getPoison());
         settings.putExtra("returnTo", "ThreePlayerScreenAlt");
-        settings.putExtra("numPlayers", 3);
-
         startActivity(settings);
     }
 

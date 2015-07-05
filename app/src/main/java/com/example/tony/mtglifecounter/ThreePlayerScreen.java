@@ -20,9 +20,7 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     ThreePlayerLifeFragment playerOne, playerTwo, playerThree;
-    String playerOneLife, playerTwoLife, playerThreeLife,
-            playerOnePoison, playerTwoPoison, playerThreePoison;
-    String newPlayerOneName, newPlayerTwoName, newPlayerThreeName;
+    DBManager dbManager;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -35,39 +33,21 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
 
         this.gestureDetector = new GestureDetectorCompat(this,this);
 
+        //Allows the use of the database containing all the player information
+        dbManager = new DBManager(this, null, null, 1);
+
         //References to Player One and Player Two fragments
         playerOne = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment3);
         playerTwo = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
         playerThree = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment5);
 
-        //At the start of the game each player has zero poison counters
-        Bundle dataBundle = getIntent().getExtras();
-        if (dataBundle == null){
-            playerOnePoison = "0";
-            playerTwoPoison = "0";
-            playerThreePoison = "0";
-        } else {
-            playerOneLife = dataBundle.getString("playerOne Life");
-            playerTwoLife = dataBundle.getString("playerTwo Life");
-            playerThreeLife = dataBundle.getString("playerThree Life");
-            playerOnePoison = dataBundle.getString("playerOne Poison");
-            playerTwoPoison = dataBundle.getString("playerTwo Poison");
-            playerThreePoison = dataBundle.getString("playerThree Poison");
-
-            playerOne.setLife(playerOneLife);
-            playerTwo.setLife(playerTwoLife);
-            playerThree.setLife(playerThreeLife);
-
-            newPlayerOneName = dataBundle.getString("newPlayerOneName");
-            newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
-            newPlayerThreeName = dataBundle.getString("newPlayerThreeName");
-        }
-
-        if (newPlayerOneName != null && newPlayerTwoName != null && newPlayerThreeName != null){
-            playerOne.setName(newPlayerOneName);
-            playerTwo.setName(newPlayerTwoName);
-            playerThree.setName(newPlayerThreeName);
-        }
+        //Use data from the MTGDatabase
+        playerOne.setLife(dbManager.dbGetLife(1));
+        playerTwo.setLife(dbManager.dbGetLife(2));
+        playerThree.setLife(dbManager.dbGetLife(3));
+        playerOne.setName(dbManager.dbGetName(1));
+        playerTwo.setName(dbManager.dbGetName(2));
+        playerThree.setName(dbManager.dbGetName(3));
     }
 
     /***************************************************************
@@ -106,12 +86,9 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                     Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreenAlt.class);
-                    three_player.putExtra("playerOne Life", playerOne.getLife());
-                    three_player.putExtra("playerTwo Life", playerTwo.getLife());
-                    three_player.putExtra("playerThree Life", playerThree.getLife());
-                    three_player.putExtra("playerOne Poison", playerOnePoison);
-                    three_player.putExtra("playerTwo Poison", playerTwoPoison);
-                    three_player.putExtra("playerThree Poison", playerThreePoison);
+                    dbManager.updateLife(1, playerOne.getLife());
+                    dbManager.updateLife(2, playerTwo.getLife());
+                    dbManager.updateLife(3, playerThree.getLife());
                     startActivity(three_player);
                 }
             }
@@ -136,27 +113,29 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        playerOne.resetLife();
-        playerTwo.resetLife();
-        playerThree.resetLife();
-        playerOnePoison = "0";
-        playerTwoPoison = "0";
-        playerThreePoison = "0";
+        dbManager.updateLife(1, "20");
+        dbManager.updateLife(2, "20");
+        dbManager.updateLife(3, "20");
+        dbManager.updateLife(4, "20");
+
+        dbManager.updatePoison(1, "0");
+        dbManager.updatePoison(2, "0");
+        dbManager.updatePoison(3, "0");
+        dbManager.updatePoison(4, "0");
+
+        playerOne.setLife(dbManager.dbGetLife(1));
+        playerTwo.setLife(dbManager.dbGetLife(2));
+        playerThree.setLife(dbManager.dbGetLife(3));
     }
 
+    //This gets called by the ResetAndSettingsFragment when "Settings" is clicked
     @Override
     public void toSettings() {
         Intent settings = new Intent(getApplicationContext(), Settings.class);
-
-        settings.putExtra("playerOne Life", playerOne.getLife());
-        settings.putExtra("playerTwo Life", playerTwo.getLife());
-        settings.putExtra("playerThree Life", playerThree.getLife());
-        settings.putExtra("playerOne Poison", playerOnePoison);
-        settings.putExtra("playerTwo Poison", playerTwoPoison);
-        settings.putExtra("playerThree Poison", playerThreePoison);
+        dbManager.updateLife(1, playerOne.getLife());
+        dbManager.updateLife(2, playerTwo.getLife());
+        dbManager.updateLife(3, playerThree.getLife());
         settings.putExtra("returnTo", "ThreePlayerScreen");
-        settings.putExtra("numPlayers", 3);
-
         startActivity(settings);
     }
 

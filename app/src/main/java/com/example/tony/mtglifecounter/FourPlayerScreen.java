@@ -20,9 +20,7 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     FourPlayerLifeFragment playerOne, playerTwo, playerThree, playerFour;
-    String playerOneLife, playerTwoLife, playerThreeLife, playerFourLife,
-            playerOnePoison, playerTwoPoison, playerThreePoison, playerFourPoison;
-    String newPlayerOneName, newPlayerTwoName, newPlayerThreeName, newPlayerFourName;
+    DBManager dbManager;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -35,47 +33,24 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
 
         this.gestureDetector = new GestureDetectorCompat(this,this);
 
+        //Allows the use of the database containing all the player information
+        dbManager = new DBManager(this, null, null, 1);
+
         //References to Player One and Player Two fragments
         playerOne = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment8);
         playerTwo = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment9);
         playerThree = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment10);
         playerFour = (FourPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment11);
 
-        //At the start of the game each player has zero poison counters
-        Bundle dataBundle = getIntent().getExtras();
-        if (dataBundle == null){
-            playerOnePoison = "0";
-            playerTwoPoison = "0";
-            playerThreePoison = "0";
-            playerFourPoison = "0";
-        } else {
-            playerOneLife = dataBundle.getString("playerOne Life");
-            playerTwoLife = dataBundle.getString("playerTwo Life");
-            playerThreeLife = dataBundle.getString("playerThree Life");
-            playerFourLife = dataBundle.getString("playerFour Life");
-            playerOnePoison = dataBundle.getString("playerOne Poison");
-            playerTwoPoison = dataBundle.getString("playerTwo Poison");
-            playerThreePoison = dataBundle.getString("playerThree Poison");
-            playerFourPoison = dataBundle.getString("playerFour Poison");
-
-            playerOne.setLife(playerOneLife);
-            playerTwo.setLife(playerTwoLife);
-            playerThree.setLife(playerThreeLife);
-            playerFour.setLife(playerFourLife);
-
-            newPlayerOneName = dataBundle.getString("newPlayerOneName");
-            newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
-            newPlayerThreeName = dataBundle.getString("newPlayerThreeName");
-            newPlayerFourName = dataBundle.getString("newPlayerFourName");
-        }
-
-        if (newPlayerOneName != null && newPlayerTwoName != null && newPlayerThreeName != null
-                && newPlayerFourName != null){
-            playerOne.setName(newPlayerOneName);
-            playerTwo.setName(newPlayerTwoName);
-            playerThree.setName(newPlayerThreeName);
-            playerFour.setName(newPlayerFourName);
-        }
+        //Use data from the MTGDatabase
+        playerOne.setLife(dbManager.dbGetLife(1));
+        playerTwo.setLife(dbManager.dbGetLife(2));
+        playerThree.setLife(dbManager.dbGetLife(3));
+        playerFour.setLife(dbManager.dbGetLife(4));
+        playerOne.setName(dbManager.dbGetName(1));
+        playerTwo.setName(dbManager.dbGetName(2));
+        playerThree.setName(dbManager.dbGetName(3));
+        playerFour.setName(dbManager.dbGetName(4));
     }
 
     /***************************************************************
@@ -114,14 +89,10 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                     Intent four_player = new Intent(getApplicationContext(), FourPlayerScreenAlt.class);
-                    four_player.putExtra("playerOne Life", playerOne.getLife());
-                    four_player.putExtra("playerTwo Life", playerTwo.getLife());
-                    four_player.putExtra("playerThree Life", playerThree.getLife());
-                    four_player.putExtra("playerFour Life", playerFour.getLife());
-                    four_player.putExtra("playerOne Poison", playerOnePoison);
-                    four_player.putExtra("playerTwo Poison", playerTwoPoison);
-                    four_player.putExtra("playerThree Poison", playerThreePoison);
-                    four_player.putExtra("playerFour Poison", playerFourPoison);
+                    dbManager.updateLife(1, playerOne.getLife());
+                    dbManager.updateLife(2, playerTwo.getLife());
+                    dbManager.updateLife(3, playerThree.getLife());
+                    dbManager.updateLife(4, playerFour.getLife());
                     startActivity(four_player);
                 }
             }
@@ -146,31 +117,31 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        playerOne.resetLife();
-        playerTwo.resetLife();
-        playerThree.resetLife();
-        playerFour.resetLife();
-        playerOnePoison = "0";
-        playerTwoPoison = "0";
-        playerThreePoison = "0";
-        playerFourPoison = "0";
+        dbManager.updateLife(1, "20");
+        dbManager.updateLife(2, "20");
+        dbManager.updateLife(3, "20");
+        dbManager.updateLife(4, "20");
+
+        dbManager.updatePoison(1, "0");
+        dbManager.updatePoison(2, "0");
+        dbManager.updatePoison(3, "0");
+        dbManager.updatePoison(4, "0");
+
+        playerOne.setLife(dbManager.dbGetLife(1));
+        playerTwo.setLife(dbManager.dbGetLife(2));
+        playerThree.setLife(dbManager.dbGetLife(3));
+        playerFour.setLife(dbManager.dbGetLife(4));
     }
 
+    //This gets called by the ResetAndSettingsFragment when "Settings" is clicked
     @Override
     public void toSettings() {
         Intent settings = new Intent(getApplicationContext(), Settings.class);
-
-        settings.putExtra("playerOne Life", playerOne.getLife());
-        settings.putExtra("playerTwo Life", playerTwo.getLife());
-        settings.putExtra("playerThree Life", playerThree.getLife());
-        settings.putExtra("playerFour Life", playerFour.getLife());
-        settings.putExtra("playerOne Poison", playerOnePoison);
-        settings.putExtra("playerTwo Poison", playerTwoPoison);
-        settings.putExtra("playerThree Poison", playerThreePoison);
-        settings.putExtra("playerFour Poison", playerFourPoison);
+        dbManager.updateLife(1, playerOne.getLife());
+        dbManager.updateLife(2, playerTwo.getLife());
+        dbManager.updateLife(3, playerThree.getLife());
+        dbManager.updateLife(4, playerFour.getLife());
         settings.putExtra("returnTo", "FourPlayerScreen");
-        settings.putExtra("numPlayers", 4);
-
         startActivity(settings);
     }
 

@@ -23,6 +23,7 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
     String playerOneLife, playerTwoLife, playerThreeLife, playerFourLife,
             playerOnePoison, playerTwoPoison, playerThreePoison, playerFourPoison;
     String newPlayerOneName, newPlayerTwoName, newPlayerThreeName, newPlayerFourName;
+    DBManager dbManager;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -35,40 +36,24 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
 
         this.gestureDetector = new GestureDetectorCompat(this,this);
 
+        //Allows the use of the database containing all the player information
+        dbManager = new DBManager(this, null, null, 1);
+
         //References to Player One and Player Two fragments
         playerOne = (FourPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment20);
         playerTwo = (FourPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment21);
         playerThree = (FourPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment22);
         playerFour = (FourPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment23);
 
-        //At the start of the game each player has zero poison counters
-        Bundle dataBundle = getIntent().getExtras();
-        playerOneLife = dataBundle.getString("playerOne Life");
-        playerTwoLife = dataBundle.getString("playerTwo Life");
-        playerThreeLife = dataBundle.getString("playerThree Life");
-        playerFourLife = dataBundle.getString("playerFour Life");
-        playerOnePoison = dataBundle.getString("playerOne Poison");
-        playerTwoPoison = dataBundle.getString("playerTwo Poison");
-        playerThreePoison = dataBundle.getString("playerThree Poison");
-        playerFourPoison = dataBundle.getString("playerFour Poison");
-
-        playerOne.setPoison(playerOnePoison);
-        playerTwo.setPoison(playerTwoPoison);
-        playerThree.setPoison(playerThreePoison);
-        playerFour.setPoison(playerFourPoison);
-
-        newPlayerOneName = dataBundle.getString("newPlayerOneName");
-        newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
-        newPlayerThreeName = dataBundle.getString("newPlayerThreeName");
-        newPlayerFourName = dataBundle.getString("newPlayerFourName");
-
-        if (newPlayerOneName != null && newPlayerTwoName != null && newPlayerThreeName != null
-            && newPlayerFourName != null){
-            playerOne.setName(newPlayerOneName);
-            playerTwo.setName(newPlayerTwoName);
-            playerThree.setName(newPlayerThreeName);
-            playerFour.setName(newPlayerFourName);
-        }
+        //Get data from the MTGDatabase
+        playerOne.setPoison(dbManager.dbGetPoison(1));
+        playerTwo.setPoison(dbManager.dbGetPoison(2));
+        playerThree.setPoison(dbManager.dbGetPoison(3));
+        playerFour.setPoison(dbManager.dbGetPoison(4));
+        playerOne.setName(dbManager.dbGetName(1));
+        playerTwo.setName(dbManager.dbGetName(2));
+        playerThree.setName(dbManager.dbGetName(3));
+        playerFour.setName(dbManager.dbGetName(4));
     }
 
     /***************************************************************
@@ -107,14 +92,10 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                     Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
-                    four_player.putExtra("playerOne Life", playerOneLife);
-                    four_player.putExtra("playerTwo Life", playerTwoLife);
-                    four_player.putExtra("playerThree Life", playerThreeLife);
-                    four_player.putExtra("playerFour Life", playerFourLife);
-                    four_player.putExtra("playerOne Poison", playerOne.getPoison());
-                    four_player.putExtra("playerTwo Poison", playerTwo.getPoison());
-                    four_player.putExtra("playerThree Poison", playerThree.getPoison());
-                    four_player.putExtra("playerFour Poison", playerFour.getPoison());
+                    dbManager.updatePoison(1, playerOne.getPoison());
+                    dbManager.updatePoison(2, playerTwo.getPoison());
+                    dbManager.updatePoison(3, playerThree.getPoison());
+                    dbManager.updatePoison(4, playerFour.getPoison());
                     startActivity(four_player);
                 }
             }
@@ -138,31 +119,30 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
 
     @Override
     public void resetTotal() {
-        playerOne.resetPoison();
-        playerTwo.resetPoison();
-        playerThree.resetPoison();
-        playerFour.resetPoison();
-        playerOneLife = "20";
-        playerTwoLife = "20";
-        playerThreeLife = "20";
-        playerFourLife = "20";
+        dbManager.updateLife(1, "20");
+        dbManager.updateLife(2, "20");
+        dbManager.updateLife(3, "20");
+        dbManager.updateLife(4, "20");
+
+        dbManager.updatePoison(1, "0");
+        dbManager.updatePoison(2, "0");
+        dbManager.updatePoison(3, "0");
+        dbManager.updatePoison(4, "0");
+
+        playerOne.setPoison(dbManager.dbGetLife(1));
+        playerTwo.setPoison(dbManager.dbGetLife(2));
+        playerThree.setPoison(dbManager.dbGetLife(3));
+        playerFour.setPoison(dbManager.dbGetPoison(4));
     }
 
     @Override
     public void toSettings() {
         Intent settings = new Intent(getApplicationContext(), Settings.class);
-
-        settings.putExtra("playerOne Life", playerOneLife);
-        settings.putExtra("playerTwo Life", playerTwoLife);
-        settings.putExtra("playerThree Life", playerThreeLife);
-        settings.putExtra("playerFour Life", playerFourLife);
-        settings.putExtra("playerOne Poison", playerOne.getPoison());
-        settings.putExtra("playerTwo Poison", playerTwo.getPoison());
-        settings.putExtra("playerThree Poison", playerThree.getPoison());
-        settings.putExtra("playerFour Poison", playerFour.getPoison());
+        dbManager.updatePoison(1, playerOne.getPoison());
+        dbManager.updatePoison(2, playerTwo.getPoison());
+        dbManager.updatePoison(3, playerThree.getPoison());
+        dbManager.updatePoison(4, playerFour.getPoison());
         settings.putExtra("returnTo", "FourPlayerScreenAlt");
-        settings.putExtra("numPlayers", 4);
-
         startActivity(settings);
     }
 

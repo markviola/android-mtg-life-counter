@@ -26,10 +26,18 @@ public class MainActivity extends ActionBarActivity{
         title = (TextView)findViewById(R.id.title);
         num_players = (TextView)findViewById(R.id.num_players);
         dbManager = new DBManager(this, null, null, 1);
-        setup();
+
+        //Only allow four rows to be created for each player; prevents duplicates
+        if (dbManager.isEmpty()){
+            setup();
+        } else {
+            resetTotals();
+        }
     }
 
+    //Add the four players into the database
     public void setup(){
+        Log.i(TAG, "In setup");
         Player playerOne = new Player("Player One");
         Player playerTwo = new Player("Player Two");
         Player playerThree = new Player("Player Three");
@@ -39,6 +47,25 @@ public class MainActivity extends ActionBarActivity{
         dbManager.addPlayer(playerTwo);
         dbManager.addPlayer(playerThree);
         dbManager.addPlayer(playerFour);
+    }
+
+    public void resetTotals(){
+        Log.i(TAG, "In resetTotals");
+
+        dbManager.updateLife(1, "20");
+        dbManager.updateLife(2, "20");
+        dbManager.updateLife(3, "20");
+        dbManager.updateLife(4, "20");
+
+        dbManager.updatePoison(1, "0");
+        dbManager.updatePoison(2, "0");
+        dbManager.updatePoison(3, "0");
+        dbManager.updatePoison(4, "0");
+
+        dbManager.updatePlayerName(1, "Player One");
+        dbManager.updatePlayerName(2, "Player Two");
+        dbManager.updatePlayerName(3, "Player Three");
+        dbManager.updatePlayerName(4, "Player Four");
     }
 
     public void confirm_button(View v){

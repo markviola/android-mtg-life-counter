@@ -20,8 +20,6 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     TwoPlayerLifeFragment playerOne, playerTwo;
-    String playerOneLife, playerTwoLife, playerOnePoison, playerTwoPoison;
-    String newPlayerOneName, newPlayerTwoName;
     DBManager dbManager;
 
     private GestureDetectorCompat gestureDetector;
@@ -43,28 +41,11 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         playerOne = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         playerTwo = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
 
-        //At the start of the game each player has zero poison counters
-        Bundle dataBundle = getIntent().getExtras();
-        if (dataBundle == null){
-            playerOnePoison = "0";
-            playerTwoPoison = "0";
-        } else {
-            playerOneLife = dataBundle.getString("playerOne Life");
-            playerTwoLife = dataBundle.getString("playerTwo Life");
-            playerOnePoison = dataBundle.getString("playerOne Poison");
-            playerTwoPoison = dataBundle.getString("playerTwo Poison");
-
-            playerOne.setLife(playerOneLife);
-            playerTwo.setLife(playerTwoLife);
-
-            newPlayerOneName = dataBundle.getString("newPlayerOneName");
-            newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
-        }
-
-        if (newPlayerOneName != null && newPlayerTwoName != null){
-            playerOne.setName(newPlayerOneName);
-            playerTwo.setName(newPlayerTwoName);
-        }
+        //Use data from the MTGDatabase
+        playerOne.setLife(dbManager.dbGetLife(1));
+        playerTwo.setLife(dbManager.dbGetLife(2));
+        playerOne.setName(dbManager.dbGetName(1));
+        playerTwo.setName(dbManager.dbGetName(2));
     }
 
     /***************************************************************
@@ -102,12 +83,9 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
             float diffX = e2.getX() - e1.getX();
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-
+                    dbManager.updateLife(1, playerOne.getLife());
+                    dbManager.updateLife(2, playerTwo.getLife());
                     Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreenAlt.class);
-                    two_player.putExtra("playerOne Life", playerOne.getLife());
-                    two_player.putExtra("playerTwo Life", playerTwo.getLife());
-                    two_player.putExtra("playerOne Poison", playerOnePoison);
-                    two_player.putExtra("playerTwo Poison", playerTwoPoison);
                     startActivity(two_player);
                 }
             }
@@ -132,24 +110,27 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        playerOne.resetLife();
-        playerTwo.resetLife();
-        playerOnePoison = "0";
-        playerTwoPoison = "0";
+        dbManager.updateLife(1, "20");
+        dbManager.updateLife(2, "20");
+        dbManager.updateLife(3, "20");
+        dbManager.updateLife(4, "20");
+
+        dbManager.updatePoison(1, "0");
+        dbManager.updatePoison(2, "0");
+        dbManager.updatePoison(3, "0");
+        dbManager.updatePoison(4, "0");
+
+        playerOne.setLife(dbManager.dbGetLife(1));
+        playerTwo.setLife(dbManager.dbGetLife(2));
     }
 
+    //This gets called by the ResetAndSettingsFragment when "Settings" is clicked
     @Override
     public void toSettings() {
-
         Intent settings = new Intent(getApplicationContext(), Settings.class);
-
-        settings.putExtra("playerOne Life", playerOne.getLife());
-        settings.putExtra("playerTwo Life", playerTwo.getLife());
-        settings.putExtra("playerOne Poison", playerOnePoison);
-        settings.putExtra("playerTwo Poison", playerTwoPoison);
+        dbManager.updateLife(1, playerOne.getLife());
+        dbManager.updateLife(2, playerTwo.getLife());
         settings.putExtra("returnTo", "TwoPlayerScreen");
-        settings.putExtra("numPlayers", 2);
-
         startActivity(settings);
     }
 

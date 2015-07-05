@@ -14,10 +14,8 @@ public class Settings extends ActionBarActivity {
     private static final String TAG = "Tony message";
 
     SettingsPlayerFragment playerOne, playerTwo, playerThree, playerFour;
-    String playerOneLife, playerTwoLife, playerThreeLife, playerFourLife,
-            playerOnePoison, playerTwoPoison, playerThreePoison, playerFourPoison;
     Bundle dataBundle;
-    int numPlayers;
+    DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,32 +29,16 @@ public class Settings extends ActionBarActivity {
         playerThree = (SettingsPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment27);
         playerFour = (SettingsPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment28);
 
+        //Allows the use of the database containing all the player information
+        dbManager = new DBManager(this, null, null, 1);
+
         //Set player numbers
-        playerOne.setPlayerNumber("1");
-        playerTwo.setPlayerNumber("2");
-        playerThree.setPlayerNumber("3");
-        playerFour.setPlayerNumber("4");
+        playerOne.setPlayerName(dbManager.dbGetName(1));
+        playerTwo.setPlayerName(dbManager.dbGetName(2));
+        playerThree.setPlayerName(dbManager.dbGetName(3));
+        playerFour.setPlayerName(dbManager.dbGetName(4));
 
         dataBundle = getIntent().getExtras();
-        numPlayers = dataBundle.getInt("numPlayers");
-
-        switch(numPlayers){
-            case 4:
-                playerFourLife = dataBundle.getString("playerFour Life");
-                playerFourPoison = dataBundle.getString("playerFour Poison");
-            case 3:
-                playerThreeLife = dataBundle.getString("playerThree Life");
-                playerThreePoison = dataBundle.getString("playerThree Poison");
-            case 2:
-                playerOneLife = dataBundle.getString("playerOne Life");
-                playerOnePoison = dataBundle.getString("playerOne Poison");
-                playerTwoLife = dataBundle.getString("playerTwo Life");
-                playerTwoPoison = dataBundle.getString("playerTwo Poison");
-                break;
-            default:
-                Log.i(TAG, "ERROR in Settings");
-        }
-
     }
 
     @Override
@@ -81,9 +63,23 @@ public class Settings extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Update the MTGDatabase with any updated names then go back to the previous activity
     public void confirmButton(View v){
         String returnTo = dataBundle.getString("returnTo");
         Intent returnToIntent;
+
+        if(playerOne.getNewName().length() != 0){
+            dbManager.updatePlayerName(1, playerOne.getNewName());
+        }
+        if(playerTwo.getNewName().length() != 0){
+            dbManager.updatePlayerName(2, playerTwo.getNewName());
+        }
+        if(playerThree.getNewName().length() != 0){
+            dbManager.updatePlayerName(3, playerThree.getNewName());
+        }
+        if(playerFour.getNewName().length() != 0){
+            dbManager.updatePlayerName(4, playerFour.getNewName());
+        }
 
         //Determine the correct activity to exit back to
         switch(returnTo){
@@ -107,31 +103,6 @@ public class Settings extends ActionBarActivity {
                 break;
             default:
                 returnToIntent = new Intent(getApplicationContext(), MainActivity.class);
-        }
-
-        //Add all of the necessary information to send back to te returned activity
-        switch(returnTo){
-            case "FourPlayerScreen":
-            case "FourPlayerScreenAlt":
-                returnToIntent.putExtra("newPlayerFourName", playerFour.getNewName());
-                returnToIntent.putExtra("playerFour Life", playerFourLife);
-                returnToIntent.putExtra("playerFour Poison", playerFourPoison);
-            case "ThreePlayerScreen":
-            case "ThreePlayerScreenAlt":
-                returnToIntent.putExtra("newPlayerThreeName", playerThree.getNewName());
-                returnToIntent.putExtra("playerThree Life", playerThreeLife);
-                returnToIntent.putExtra("playerThree Poison", playerThreePoison);
-            case "TwoPlayerScreen":
-            case "TwoPlayerScreenAlt":
-                returnToIntent.putExtra("newPlayerOneName", playerOne.getNewName());
-                returnToIntent.putExtra("newPlayerTwoName", playerTwo.getNewName());
-                returnToIntent.putExtra("playerOne Life", playerOneLife);
-                returnToIntent.putExtra("playerTwo Life", playerTwoLife);
-                returnToIntent.putExtra("playerOne Poison", playerOnePoison);
-                returnToIntent.putExtra("playerTwo Poison", playerTwoPoison);
-                break;
-            default:
-                startActivity(returnToIntent);
         }
 
         startActivity(returnToIntent);

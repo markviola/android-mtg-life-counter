@@ -29,5 +29,5 @@ public class SettingsPlayerFragment extends Fragment {
         return player_name.getText().toString();
     }
 
-    public void setPlayerNumber(String number){ player_name_text.setText("Enter Player " + number + "'s Name:"); }
+    public void setPlayerName(String currentName){ player_name_text.setText("Change " + currentName + "'s Name:"); }
 }

@@ -12,7 +12,7 @@ public class DBManager extends SQLiteOpenHelper{
 
     private static final String TAG = "Tony message";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "MTGDatabase.db";
     public static final String TABLE_PLAYERS = "players";
     public static final String COLUMN_ID = "_id";
@@ -35,13 +35,21 @@ public class DBManager extends SQLiteOpenHelper{
                 COLUMN_POISON + " TEXT " +
                 ");";
         db.execSQL(query);
-        Log.i(TAG, "In onCreate DBManager");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYERS);
         onCreate(db);
+    }
+
+    //Check if database is empty
+    public boolean isEmpty(){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_PLAYERS + " WHERE 1";
+        Cursor c = db.rawQuery(query, null);
+
+        return c.getCount() == 0;
     }
 
     //Add player to the database
@@ -118,5 +126,26 @@ public class DBManager extends SQLiteOpenHelper{
         }
         db.close();
         return "ERROR POISON";
+    }
+
+    public void updateLife(int playerNumber, String life){
+        String query = "UPDATE " + TABLE_PLAYERS + " SET _life = \'" + life + "\' WHERE _id = " +
+                Integer.toString(playerNumber);
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+    }
+
+    public void updatePoison(int playerNumber, String poison){
+        String query = "UPDATE " + TABLE_PLAYERS + " SET _poison = \'" + poison +
+                "\' WHERE _id = " + Integer.toString(playerNumber);
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+    }
+
+    public void updatePlayerName(int playerNumber, String playerName){
+        String query = "UPDATE " + TABLE_PLAYERS + " SET _playerName = \'" + playerName +
+                "\' WHERE _id = " + Integer.toString(playerNumber);
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
     }
 }
