@@ -4,7 +4,7 @@ The MTG Life Counter is an Android app that allows people to easily keep track o
 
 ###Screenshots
 
-Starting screen, life totals screen, poison counter screen, and settings screen (respectively):
+Starting screen, settings screen, life totals screen, and poison counter screen (respectively):
 
 <p align="center">
   <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/all_types_screen.jpg?raw=true" alt="Player Screens"/>
@@ -19,3 +19,5 @@ Pressing the Reset button will change all life totals back to "20" and all poiso
 
 ###To-do List:
 * Incorporate SQL to create a database for all player information
+* Include option where the orientation of the player screen is rotated 180 degrees so that in two player mode the opponent can change the total themself
+* Consolidate player life total and poison counter fragments so there is only one standard fragment that can be used for all numbers of players

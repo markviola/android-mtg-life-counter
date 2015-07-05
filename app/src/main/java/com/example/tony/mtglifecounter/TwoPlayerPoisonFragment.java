@@ -109,4 +109,8 @@ public class TwoPlayerPoisonFragment extends Fragment {
     public void setPoison(String poisonValue){
         player_life.setText(poisonValue);
     }
+
+    public void setName(String newName){
+        player_name.setText(newName);
+    }
 }

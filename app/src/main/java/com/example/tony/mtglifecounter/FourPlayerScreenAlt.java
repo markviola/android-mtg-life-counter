@@ -22,6 +22,7 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
     FourPlayerPoisonFragment playerOne, playerTwo, playerThree, playerFour;
     String playerOneLife, playerTwoLife, playerThreeLife, playerFourLife,
             playerOnePoison, playerTwoPoison, playerThreePoison, playerFourPoison;
+    String newPlayerOneName, newPlayerTwoName, newPlayerThreeName, newPlayerFourName;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -55,6 +56,19 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
         playerTwo.setPoison(playerTwoPoison);
         playerThree.setPoison(playerThreePoison);
         playerFour.setPoison(playerFourPoison);
+
+        newPlayerOneName = dataBundle.getString("newPlayerOneName");
+        newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
+        newPlayerThreeName = dataBundle.getString("newPlayerThreeName");
+        newPlayerFourName = dataBundle.getString("newPlayerFourName");
+
+        if (newPlayerOneName != null && newPlayerTwoName != null && newPlayerThreeName != null
+            && newPlayerFourName != null){
+            playerOne.setName(newPlayerOneName);
+            playerTwo.setName(newPlayerTwoName);
+            playerThree.setName(newPlayerThreeName);
+            playerFour.setName(newPlayerFourName);
+        }
     }
 
     /***************************************************************
@@ -145,7 +159,7 @@ public class FourPlayerScreenAlt extends ActionBarActivity implements ResetAndSe
         settings.putExtra("playerOne Poison", playerOne.getPoison());
         settings.putExtra("playerTwo Poison", playerTwo.getPoison());
         settings.putExtra("playerThree Poison", playerThree.getPoison());
-        settings.putExtra("playerThree Poison", playerFour.getPoison());
+        settings.putExtra("playerFour Poison", playerFour.getPoison());
         settings.putExtra("returnTo", "FourPlayerScreenAlt");
         settings.putExtra("numPlayers", 4);
 

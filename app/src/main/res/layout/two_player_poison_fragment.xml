@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
 
         android:text="Player Name"
         android:textSize="30dp"
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp"
+        android:layout_marginTop="132dp"
 
         android:text="0"
         android:textSize="30dp"
@@ -31,7 +31,7 @@
         android:id="@+id/sub_life_total"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="125dp"
         android:layout_toLeftOf="@+id/player_life"
         android:layout_marginRight="25dp"
 
@@ -43,7 +43,7 @@
         android:id="@+id/add_life_total"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="125dp"
         android:layout_toRightOf="@+id/player_life"
         android:layout_marginLeft="25dp"
 
@@ -55,7 +55,7 @@
         android:id="@+id/sub_life_total_3"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="125dp"
         android:layout_toLeftOf="@+id/player_life"
         android:layout_marginRight="90dp"
 
@@ -67,7 +67,7 @@
         android:id="@+id/add_life_total_3"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="125dp"
         android:layout_toRightOf="@+id/player_life"
         android:layout_marginLeft="90dp"
 

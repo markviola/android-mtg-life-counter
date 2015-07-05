@@ -105,4 +105,8 @@ public class FourPlayerPoisonFragment extends Fragment {
     public String getPoison(){return player_life.getText().toString();}
 
     public void setPoison(String poisonValue){player_life.setText(poisonValue);}
+
+    public void setName(String newName){
+        player_name.setText(newName);
+    }
 }

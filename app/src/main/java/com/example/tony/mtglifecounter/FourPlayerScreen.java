@@ -22,6 +22,7 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
     FourPlayerLifeFragment playerOne, playerTwo, playerThree, playerFour;
     String playerOneLife, playerTwoLife, playerThreeLife, playerFourLife,
             playerOnePoison, playerTwoPoison, playerThreePoison, playerFourPoison;
+    String newPlayerOneName, newPlayerTwoName, newPlayerThreeName, newPlayerFourName;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -61,6 +62,19 @@ public class FourPlayerScreen extends ActionBarActivity implements ResetAndSetti
             playerTwo.setLife(playerTwoLife);
             playerThree.setLife(playerThreeLife);
             playerFour.setLife(playerFourLife);
+
+            newPlayerOneName = dataBundle.getString("newPlayerOneName");
+            newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
+            newPlayerThreeName = dataBundle.getString("newPlayerThreeName");
+            newPlayerFourName = dataBundle.getString("newPlayerFourName");
+        }
+
+        if (newPlayerOneName != null && newPlayerTwoName != null && newPlayerThreeName != null
+                && newPlayerFourName != null){
+            playerOne.setName(newPlayerOneName);
+            playerTwo.setName(newPlayerTwoName);
+            playerThree.setName(newPlayerThreeName);
+            playerFour.setName(newPlayerFourName);
         }
     }
 

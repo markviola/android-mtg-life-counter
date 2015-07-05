@@ -22,6 +22,7 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
     TwoPlayerLifeFragment playerOne, playerTwo;
     String playerOneLife, playerTwoLife, playerOnePoison, playerTwoPoison;
     String newPlayerOneName, newPlayerTwoName;
+    DBManager dbManager;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -31,6 +32,9 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         setContentView(R.layout.activity_two_player_screen);
         Log.i(TAG, "onCreate TwoPlayerScreen");
         getSupportActionBar().hide();   //Gets rid of the action bar
+
+        //Allows the use of the database containing all the player information
+        dbManager = new DBManager(this, null, null, 1);
 
         //Detector for swiping gesture
         this.gestureDetector = new GestureDetectorCompat(this,this);

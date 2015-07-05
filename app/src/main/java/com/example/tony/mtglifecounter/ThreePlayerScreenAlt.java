@@ -22,6 +22,7 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
     ThreePlayerPoisonFragment playerOne, playerTwo, playerThree;
     String playerOneLife, playerTwoLife, playerThreeLife,
             playerOnePoison, playerTwoPoison, playerThreePoison;
+    String newPlayerOneName, newPlayerTwoName, newPlayerThreeName;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -49,10 +50,19 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
         playerTwoPoison = dataBundle.getString("playerTwo Poison");
         playerThreePoison = dataBundle.getString("playerThree Poison");
 
-        //Set values of poison counter
         playerOne.setPoison(playerOnePoison);
         playerTwo.setPoison(playerTwoPoison);
         playerThree.setPoison(playerThreePoison);
+
+        newPlayerOneName = dataBundle.getString("newPlayerOneName");
+        newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
+        newPlayerThreeName = dataBundle.getString("newPlayerThreeName");
+
+        if (newPlayerOneName != null && newPlayerTwoName != null && newPlayerThreeName != null){
+            playerOne.setName(newPlayerOneName);
+            playerTwo.setName(newPlayerTwoName);
+            playerThree.setName(newPlayerThreeName);
+        }
     }
 
     /***************************************************************

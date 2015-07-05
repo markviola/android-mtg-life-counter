@@ -15,6 +15,7 @@ public class MainActivity extends ActionBarActivity{
 
     private static final String TAG = "Tony message";
     TextView num_players, title;
+    DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,20 @@ public class MainActivity extends ActionBarActivity{
 
         title = (TextView)findViewById(R.id.title);
         num_players = (TextView)findViewById(R.id.num_players);
+        dbManager = new DBManager(this, null, null, 1);
+        setup();
+    }
+
+    public void setup(){
+        Player playerOne = new Player("Player One");
+        Player playerTwo = new Player("Player Two");
+        Player playerThree = new Player("Player Three");
+        Player playerFour = new Player("Player Four");
+
+        dbManager.addPlayer(playerOne);
+        dbManager.addPlayer(playerTwo);
+        dbManager.addPlayer(playerThree);
+        dbManager.addPlayer(playerFour);
     }
 
     public void confirm_button(View v){

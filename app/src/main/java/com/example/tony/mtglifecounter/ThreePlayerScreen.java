@@ -22,6 +22,7 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
     ThreePlayerLifeFragment playerOne, playerTwo, playerThree;
     String playerOneLife, playerTwoLife, playerThreeLife,
             playerOnePoison, playerTwoPoison, playerThreePoison;
+    String newPlayerOneName, newPlayerTwoName, newPlayerThreeName;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -56,6 +57,16 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
             playerOne.setLife(playerOneLife);
             playerTwo.setLife(playerTwoLife);
             playerThree.setLife(playerThreeLife);
+
+            newPlayerOneName = dataBundle.getString("newPlayerOneName");
+            newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
+            newPlayerThreeName = dataBundle.getString("newPlayerThreeName");
+        }
+
+        if (newPlayerOneName != null && newPlayerTwoName != null && newPlayerThreeName != null){
+            playerOne.setName(newPlayerOneName);
+            playerTwo.setName(newPlayerTwoName);
+            playerThree.setName(newPlayerThreeName);
         }
     }
 

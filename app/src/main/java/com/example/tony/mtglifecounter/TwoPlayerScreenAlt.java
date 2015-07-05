@@ -21,6 +21,7 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
 
     TwoPlayerPoisonFragment playerOne, playerTwo;
     String playerOneLife, playerTwoLife, playerOnePoison, playerTwoPoison;
+    String newPlayerOneName, newPlayerTwoName;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -42,12 +43,20 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
         Bundle dataBundle = getIntent().getExtras();
         playerOneLife = dataBundle.getString("playerOne Life");
         playerTwoLife = dataBundle.getString("playerTwo Life");
-        playerOnePoison = dataBundle.getString("playerOne Poison");
+        playerOnePoison= dataBundle.getString("playerOne Poison");
         playerTwoPoison = dataBundle.getString("playerTwo Poison");
 
-        //Set values of poison counter
         playerOne.setPoison(playerOnePoison);
         playerTwo.setPoison(playerTwoPoison);
+
+        newPlayerOneName = dataBundle.getString("newPlayerOneName");
+        newPlayerTwoName = dataBundle.getString("newPlayerTwoName");
+
+
+        if (newPlayerOneName != null && newPlayerTwoName != null){
+            playerOne.setName(newPlayerOneName);
+            playerTwo.setName(newPlayerTwoName);
+        }
     }
 
     /***************************************************************
