@@ -16,7 +16,7 @@ public class MainActivity extends ActionBarActivity{
 
     private static final String TAG = "Tony message";
     TextView num_players, title;
-    CheckBox gameTimer, invertedSecondPlayer;
+    CheckBox gameTimer, invertSecondPlayer;
     DBManager dbManager;
 
     @Override
@@ -28,7 +28,9 @@ public class MainActivity extends ActionBarActivity{
         title = (TextView)findViewById(R.id.title);
         num_players = (TextView)findViewById(R.id.num_players);
         gameTimer = (CheckBox) findViewById(R.id.addTimerBox);
-        invertedSecondPlayer = (CheckBox) findViewById(R.id.invertSecondPlayerBox);
+        invertSecondPlayer = (CheckBox) findViewById(R.id.invertSecondPlayerBox);
+
+        //Allows the use of the database containing all the player information
         dbManager = new DBManager(this, null, null, 1);
 
         //Only allow four rows to be created for each player; prevents duplicates
@@ -51,6 +53,8 @@ public class MainActivity extends ActionBarActivity{
         dbManager.addPlayer(playerTwo);
         dbManager.addPlayer(playerThree);
         dbManager.addPlayer(playerFour);
+        dbManager.addState("invertPlayerTwo", "false");
+        Log.i(TAG, dbManager.dbGetState("invertPlayerTwo"));
     }
 
     public void resetTotals(){
@@ -70,6 +74,8 @@ public class MainActivity extends ActionBarActivity{
         dbManager.updatePlayerName(2, "Player Two");
         dbManager.updatePlayerName(3, "Player Three");
         dbManager.updatePlayerName(4, "Player Four");
+;
+        dbManager.updateState("invertPlayerTwo", "false");
     }
 
     public void confirm_button(View v){
@@ -78,6 +84,10 @@ public class MainActivity extends ActionBarActivity{
         Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreen.class);
         Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreen.class);
         Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
+
+        if (invertSecondPlayer.isChecked()){
+            dbManager.updateState("invertPlayerTwo", "true");
+        }
 
         if (current_players == 2) {
             startActivity(two_player);
@@ -96,7 +106,7 @@ public class MainActivity extends ActionBarActivity{
         }
 
         //Any player increment leads to a player number greater than two, so hide checkbox
-        invertedSecondPlayer.setVisibility(View.GONE);
+        invertSecondPlayer.setVisibility(View.GONE);
     }
 
     public void sub_button(View v){
@@ -108,7 +118,7 @@ public class MainActivity extends ActionBarActivity{
 
         //Only show the inverted second player option when two players is the current choice
         if (current_players == 2){
-            invertedSecondPlayer.setVisibility(View.VISIBLE);
+            invertSecondPlayer.setVisibility(View.VISIBLE);
         }
     }
 

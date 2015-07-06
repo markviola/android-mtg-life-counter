@@ -12,13 +12,17 @@ public class DBManager extends SQLiteOpenHelper{
 
     private static final String TAG = "Tony message";
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "MTGDatabase.db";
     public static final String TABLE_PLAYERS = "players";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PLAYERNAME = "_playerName";
     public static final String COLUMN_LIFE = "_life";
     public static final String COLUMN_POISON = "_poison";
+
+    public static final String TABLE_GAMESTATE = "gameState";
+    public static final String COLUMN_STATENAME = "_stateName";
+    public static final String COLUMN_STATE = "_state";
 
 
     public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -28,13 +32,20 @@ public class DBManager extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.i(TAG, "In onCreate DBManager");
-        String query = "CREATE TABLE " + TABLE_PLAYERS + "(" +
+        String playerQuery = "CREATE TABLE " + TABLE_PLAYERS + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PLAYERNAME + " TEXT, " +
                 COLUMN_LIFE + " TEXT, " +
                 COLUMN_POISON + " TEXT " +
                 ");";
-        db.execSQL(query);
+        db.execSQL(playerQuery);
+
+        String stateQuery = "CREATE TABLE " + TABLE_GAMESTATE + "(" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_STATENAME + " TEXT, " +
+                COLUMN_STATE + " TEXT " +
+                ");";
+        db.execSQL(stateQuery);
     }
 
     @Override
@@ -68,6 +79,17 @@ public class DBManager extends SQLiteOpenHelper{
     public void deletePlayer(String playerName){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_PLAYERS + " WHERE " + COLUMN_PLAYERNAME + "=\"" + playerName + "\";");
+    }
+
+    //Add player to the database
+    public void addState(String stateName, String state){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_STATENAME, stateName);
+        values.put(COLUMN_STATE, state);
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_GAMESTATE, null, values);
+        db.close();
     }
 
     public String dbGetName(int playerNumber){
@@ -128,6 +150,25 @@ public class DBManager extends SQLiteOpenHelper{
         return "ERROR POISON";
     }
 
+    public String dbGetState(String stateName){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_GAMESTATE + " WHERE 1";
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("_stateName")).equals(stateName)){
+                String state = c.getString(c.getColumnIndex("_state"));
+                db.close();
+                return state;
+            }
+            c.moveToNext();
+        }
+        db.close();
+        return "ERROR STATE";
+    }
+
     public void updateLife(int playerNumber, String life){
         String query = "UPDATE " + TABLE_PLAYERS + " SET _life = \'" + life + "\' WHERE _id = " +
                 Integer.toString(playerNumber);
@@ -145,6 +186,13 @@ public class DBManager extends SQLiteOpenHelper{
     public void updatePlayerName(int playerNumber, String playerName){
         String query = "UPDATE " + TABLE_PLAYERS + " SET _playerName = \'" + playerName +
                 "\' WHERE _id = " + Integer.toString(playerNumber);
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+    }
+
+    public void updateState(String stateName, String newState){
+        String query = "UPDATE " + TABLE_GAMESTATE + " SET _state = \'" + newState +
+                "\' WHERE _stateName = \'" + stateName + "\'";
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(query);
     }

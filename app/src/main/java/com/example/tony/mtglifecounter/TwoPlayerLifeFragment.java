@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 
 public class TwoPlayerLifeFragment extends Fragment {
@@ -94,10 +95,6 @@ public class TwoPlayerLifeFragment extends Fragment {
         }
     }
 
-    public void resetLife(){
-        player_life.setText("20");
-    }
-
     public String getLife(){
         return player_life.getText().toString();
     }
@@ -108,5 +105,43 @@ public class TwoPlayerLifeFragment extends Fragment {
 
     public void setName(String newName){
         player_name.setText(newName);
+    }
+
+    public void invertPlayerScreen(){
+        RelativeLayout.LayoutParams player_name_layout=(RelativeLayout.LayoutParams)player_name.getLayoutParams();
+        player_name_layout.setMargins(0, 184*2, 0, 0);
+        player_name.setRotation(180);
+
+        RelativeLayout.LayoutParams player_life_layout=(RelativeLayout.LayoutParams)player_life.getLayoutParams();
+        player_life_layout.setMargins(0, 102*2, 0, 0);
+        player_life.setRotation(180);
+
+        RelativeLayout.LayoutParams add_1_layout=(RelativeLayout.LayoutParams)add_life_total.getLayoutParams();
+        add_1_layout.addRule(RelativeLayout.RIGHT_OF, 0);
+        add_1_layout.addRule(RelativeLayout.LEFT_OF, player_life.getId());
+        add_1_layout.setMargins(0, 95*2, 25*2, 0);
+        add_1_layout.alignWithParent = true;
+        add_life_total.setRotation(180);
+
+        RelativeLayout.LayoutParams sub_1_layout=(RelativeLayout.LayoutParams)sub_life_total.getLayoutParams();
+        sub_1_layout.addRule(RelativeLayout.LEFT_OF, 0);
+        sub_1_layout.addRule(RelativeLayout.RIGHT_OF, player_life.getId());
+        sub_1_layout.setMargins(25*2, 95*2, 0, 0);
+        sub_1_layout.alignWithParent = true;
+        sub_life_total.setRotation(180);
+
+        RelativeLayout.LayoutParams add_5_layout=(RelativeLayout.LayoutParams)add_life_total_5.getLayoutParams();
+        add_5_layout.addRule(RelativeLayout.RIGHT_OF, 0);
+        add_5_layout.addRule(RelativeLayout.LEFT_OF, player_life.getId());
+        add_5_layout.setMargins(0, 95*2, 90*2, 0);
+        add_5_layout.alignWithParent = true;
+        add_life_total_5.setRotation(180);
+
+        RelativeLayout.LayoutParams sub_5_layout=(RelativeLayout.LayoutParams)sub_life_total_5.getLayoutParams();
+        sub_5_layout.addRule(RelativeLayout.LEFT_OF, 0);
+        sub_5_layout.addRule(RelativeLayout.RIGHT_OF, player_life.getId());
+        sub_5_layout.setMargins(90*2, 95*2, 0, 0);
+        sub_5_layout.alignWithParent = true;
+        sub_life_total_5.setRotation(180);
     }
 }

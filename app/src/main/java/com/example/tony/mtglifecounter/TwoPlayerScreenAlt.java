@@ -39,9 +39,16 @@ public class TwoPlayerScreenAlt extends ActionBarActivity implements ResetAndSet
         //Dectector for swiping gesture
         this.gestureDetector = new GestureDetectorCompat(this,this);
 
-        //References to Player One and Player Two poison counter fragments
-        playerOne = (TwoPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment13);
-        playerTwo = (TwoPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment14);
+        //References to Player One and Player Two fragments
+        if (dbManager.dbGetState("invertPlayerTwo").equals("false")){
+            //References to Player One and Player Two fragments
+            playerOne = (TwoPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment13);
+            playerTwo = (TwoPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment14);
+        } else {
+            playerOne = (TwoPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment14);
+            playerTwo = (TwoPlayerPoisonFragment) getSupportFragmentManager().findFragmentById(R.id.fragment13);
+            playerTwo.invertPlayerScreen();
+        }
 
         //Get data from the MTGDatabase
         playerOne.setPoison(dbManager.dbGetPoison(1));

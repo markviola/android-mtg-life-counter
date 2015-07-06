@@ -38,8 +38,15 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         this.gestureDetector = new GestureDetectorCompat(this,this);
 
         //References to Player One and Player Two fragments
-        playerOne = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-        playerTwo = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+        if (dbManager.dbGetState("invertPlayerTwo").equals("false")){
+            //References to Player One and Player Two fragments
+            playerOne = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+            playerTwo = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+        } else {
+            playerOne = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+            playerTwo = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+            playerTwo.invertPlayerScreen();
+        }
 
         //Use data from the MTGDatabase
         playerOne.setLife(dbManager.dbGetLife(1));
