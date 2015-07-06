@@ -75,7 +75,7 @@ public class MainActivity extends ActionBarActivity{
         dbManager.updatePlayerName(2, "Player Two");
         dbManager.updatePlayerName(3, "Player Three");
         dbManager.updatePlayerName(4, "Player Four");
-;
+
         dbManager.updateState("invertPlayerTwo", "false");
     }
 

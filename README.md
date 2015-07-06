@@ -32,3 +32,4 @@ The inverted screen is used only for two player (the option disappears when two 
 * Add activity where the user can see a record of life total changes (Use services to check length between inputs?)
 * Add feature for when a player gets eliminated, it takes the user to a defeat screen then goes to a new activity with [player # - 1] people
 * Add text-to-speech for defeat screen
+* Add option for twin headed giant (40 life start) for four players, and commander (30 life start)

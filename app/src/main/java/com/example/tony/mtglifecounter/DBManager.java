@@ -115,7 +115,6 @@ public class DBManager extends SQLiteOpenHelper{
             }
             c.moveToNext();
         }
-
         db.close();
         c.close();
         return "ERROR NAME";
@@ -133,11 +132,13 @@ public class DBManager extends SQLiteOpenHelper{
             if(c.getInt(c.getColumnIndex("_id")) == playerNumber){
                 String life = c.getString(c.getColumnIndex("_life"));
                 db.close();
+                c.close();
                 return life;
             }
             c.moveToNext();
         }
         db.close();
+        c.close();
         return "ERROR LIFE";
     }
 
@@ -153,11 +154,13 @@ public class DBManager extends SQLiteOpenHelper{
             if(c.getInt(c.getColumnIndex("_id")) == playerNumber){
                 String poison = c.getString(c.getColumnIndex("_poison"));
                 db.close();
+                c.close();
                 return poison;
             }
             c.moveToNext();
         }
         db.close();
+        c.close();
         return "ERROR POISON";
     }
 
@@ -173,11 +176,13 @@ public class DBManager extends SQLiteOpenHelper{
             if(c.getString(c.getColumnIndex("_stateName")).equals(stateName)){
                 String state = c.getString(c.getColumnIndex("_state"));
                 db.close();
+                c.close();
                 return state;
             }
             c.moveToNext();
         }
         db.close();
+        c.close();
         return "ERROR STATE";
     }
 

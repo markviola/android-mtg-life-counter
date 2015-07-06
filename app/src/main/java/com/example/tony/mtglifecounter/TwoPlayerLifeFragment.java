@@ -21,6 +21,7 @@ public class TwoPlayerLifeFragment extends Fragment {
     TextView player_name, player_life;
     DisplayMetrics displayMetrics;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
