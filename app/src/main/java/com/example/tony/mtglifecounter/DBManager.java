@@ -14,12 +14,15 @@ public class DBManager extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "MTGDatabase.db";
+
+    //Information for Player table
     public static final String TABLE_PLAYERS = "players";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PLAYERNAME = "_playerName";
     public static final String COLUMN_LIFE = "_life";
     public static final String COLUMN_POISON = "_poison";
 
+    //Information for Game state table
     public static final String TABLE_GAMESTATE = "gameState";
     public static final String COLUMN_STATENAME = "_stateName";
     public static final String COLUMN_STATE = "_state";
@@ -32,6 +35,8 @@ public class DBManager extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.i(TAG, "In onCreate DBManager");
+
+        //Create Player table
         String playerQuery = "CREATE TABLE " + TABLE_PLAYERS + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PLAYERNAME + " TEXT, " +
@@ -40,6 +45,7 @@ public class DBManager extends SQLiteOpenHelper{
                 ");";
         db.execSQL(playerQuery);
 
+        //Create Game state table
         String stateQuery = "CREATE TABLE " + TABLE_GAMESTATE + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_STATENAME + " TEXT, " +
@@ -81,7 +87,7 @@ public class DBManager extends SQLiteOpenHelper{
         db.execSQL("DELETE FROM " + TABLE_PLAYERS + " WHERE " + COLUMN_PLAYERNAME + "=\"" + playerName + "\";");
     }
 
-    //Add player to the database
+    //Add a game state value to the database
     public void addState(String stateName, String state){
         ContentValues values = new ContentValues();
         values.put(COLUMN_STATENAME, stateName);
@@ -92,6 +98,7 @@ public class DBManager extends SQLiteOpenHelper{
         db.close();
     }
 
+    //Get player name through their corresponding player number
     public String dbGetName(int playerNumber){
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT _id, _playerName FROM " + TABLE_PLAYERS + " WHERE 1";
@@ -103,15 +110,18 @@ public class DBManager extends SQLiteOpenHelper{
             if(c.getInt(c.getColumnIndex("_id")) == playerNumber){
                 String playerName = c.getString(c.getColumnIndex("_playerName"));
                 db.close();
+                c.close();
                 return playerName;
             }
             c.moveToNext();
         }
 
         db.close();
+        c.close();
         return "ERROR NAME";
     }
 
+    //Get player life total through their corresponding player number
     public String dbGetLife(int playerNumber){
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT _id, _life FROM " + TABLE_PLAYERS + " WHERE 1";
@@ -131,6 +141,7 @@ public class DBManager extends SQLiteOpenHelper{
         return "ERROR LIFE";
     }
 
+    //Get player poison counter number through their corresponding player number
     public String dbGetPoison(int playerNumber){
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_PLAYERS + " WHERE 1";
@@ -150,6 +161,7 @@ public class DBManager extends SQLiteOpenHelper{
         return "ERROR POISON";
     }
 
+    //Get value of specific game state
     public String dbGetState(String stateName){
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_GAMESTATE + " WHERE 1";
@@ -169,6 +181,7 @@ public class DBManager extends SQLiteOpenHelper{
         return "ERROR STATE";
     }
 
+    //Update a specific player's life total
     public void updateLife(int playerNumber, String life){
         String query = "UPDATE " + TABLE_PLAYERS + " SET _life = \'" + life + "\' WHERE _id = " +
                 Integer.toString(playerNumber);
@@ -176,6 +189,7 @@ public class DBManager extends SQLiteOpenHelper{
         db.execSQL(query);
     }
 
+    //Update a specific player's poison counter value
     public void updatePoison(int playerNumber, String poison){
         String query = "UPDATE " + TABLE_PLAYERS + " SET _poison = \'" + poison +
                 "\' WHERE _id = " + Integer.toString(playerNumber);
@@ -183,6 +197,7 @@ public class DBManager extends SQLiteOpenHelper{
         db.execSQL(query);
     }
 
+    //Update a specific player's name
     public void updatePlayerName(int playerNumber, String playerName){
         String query = "UPDATE " + TABLE_PLAYERS + " SET _playerName = \'" + playerName +
                 "\' WHERE _id = " + Integer.toString(playerNumber);
@@ -190,6 +205,7 @@ public class DBManager extends SQLiteOpenHelper{
         db.execSQL(query);
     }
 
+    //Update a specific game state's state
     public void updateState(String stateName, String newState){
         String query = "UPDATE " + TABLE_GAMESTATE + " SET _state = \'" + newState +
                 "\' WHERE _stateName = \'" + stateName + "\'";

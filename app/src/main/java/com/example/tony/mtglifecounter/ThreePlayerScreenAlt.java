@@ -28,7 +28,7 @@ public class ThreePlayerScreenAlt extends ActionBarActivity implements ResetAndS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_player_screen_alt);
-        Log.i(TAG, "onCreate FourPlayerScreenAlt");
+        Log.i(TAG, "onCreate ThreePlayerScreenAlt");
         getSupportActionBar().hide();
 
         //Allows the use of the database containing all the player information

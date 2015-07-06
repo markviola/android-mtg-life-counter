@@ -49,14 +49,15 @@ public class MainActivity extends ActionBarActivity{
         Player playerThree = new Player("Player Three");
         Player playerFour = new Player("Player Four");
 
+        //The only time information is added to the database is on setup
         dbManager.addPlayer(playerOne);
         dbManager.addPlayer(playerTwo);
         dbManager.addPlayer(playerThree);
         dbManager.addPlayer(playerFour);
         dbManager.addState("invertPlayerTwo", "false");
-        Log.i(TAG, dbManager.dbGetState("invertPlayerTwo"));
     }
 
+    //Update database data to base settings
     public void resetTotals(){
         Log.i(TAG, "In resetTotals");
 

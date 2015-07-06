@@ -3,6 +3,7 @@ package com.example.tony.mtglifecounter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public class TwoPlayerLifeFragment extends Fragment {
     private static final String TAG = "Tony message";
     Button add_life_total, sub_life_total, add_life_total_5, sub_life_total_5;
     TextView player_name, player_life;
+    DisplayMetrics displayMetrics;
 
     @Nullable
     @Override
@@ -29,6 +31,9 @@ public class TwoPlayerLifeFragment extends Fragment {
         sub_life_total_5 = (Button) view.findViewById(R.id.sub_life_total_5);
         player_name = (TextView) view.findViewById(R.id.player_name);
         player_life = (TextView) view.findViewById(R.id.player_life);
+
+        //Get phone screen data
+        displayMetrics = getActivity().getResources().getDisplayMetrics();
 
         add_life_total.setOnClickListener(
                 new View.OnClickListener(){
@@ -108,39 +113,41 @@ public class TwoPlayerLifeFragment extends Fragment {
     }
 
     public void invertPlayerScreen(){
+        int screenDensity = Math.round(displayMetrics.density);
+
         RelativeLayout.LayoutParams player_name_layout=(RelativeLayout.LayoutParams)player_name.getLayoutParams();
-        player_name_layout.setMargins(0, 184*2, 0, 0);
+        player_name_layout.setMargins(0, 184*screenDensity, 0, 0);
         player_name.setRotation(180);
 
         RelativeLayout.LayoutParams player_life_layout=(RelativeLayout.LayoutParams)player_life.getLayoutParams();
-        player_life_layout.setMargins(0, 102*2, 0, 0);
+        player_life_layout.setMargins(0, 102*screenDensity, 0, 0);
         player_life.setRotation(180);
 
         RelativeLayout.LayoutParams add_1_layout=(RelativeLayout.LayoutParams)add_life_total.getLayoutParams();
         add_1_layout.addRule(RelativeLayout.RIGHT_OF, 0);
         add_1_layout.addRule(RelativeLayout.LEFT_OF, player_life.getId());
-        add_1_layout.setMargins(0, 95*2, 25*2, 0);
+        add_1_layout.setMargins(0, 95*screenDensity, 25*screenDensity, 0);
         add_1_layout.alignWithParent = true;
         add_life_total.setRotation(180);
 
         RelativeLayout.LayoutParams sub_1_layout=(RelativeLayout.LayoutParams)sub_life_total.getLayoutParams();
         sub_1_layout.addRule(RelativeLayout.LEFT_OF, 0);
         sub_1_layout.addRule(RelativeLayout.RIGHT_OF, player_life.getId());
-        sub_1_layout.setMargins(25*2, 95*2, 0, 0);
+        sub_1_layout.setMargins(25*screenDensity, 95*screenDensity, 0, 0);
         sub_1_layout.alignWithParent = true;
         sub_life_total.setRotation(180);
 
         RelativeLayout.LayoutParams add_5_layout=(RelativeLayout.LayoutParams)add_life_total_5.getLayoutParams();
         add_5_layout.addRule(RelativeLayout.RIGHT_OF, 0);
         add_5_layout.addRule(RelativeLayout.LEFT_OF, player_life.getId());
-        add_5_layout.setMargins(0, 95*2, 90*2, 0);
+        add_5_layout.setMargins(0, 95*screenDensity, 90*screenDensity, 0);
         add_5_layout.alignWithParent = true;
         add_life_total_5.setRotation(180);
 
         RelativeLayout.LayoutParams sub_5_layout=(RelativeLayout.LayoutParams)sub_life_total_5.getLayoutParams();
         sub_5_layout.addRule(RelativeLayout.LEFT_OF, 0);
         sub_5_layout.addRule(RelativeLayout.RIGHT_OF, player_life.getId());
-        sub_5_layout.setMargins(90*2, 95*2, 0, 0);
+        sub_5_layout.setMargins(90*screenDensity, 95*screenDensity, 0, 0);
         sub_5_layout.alignWithParent = true;
         sub_life_total_5.setRotation(180);
     }
