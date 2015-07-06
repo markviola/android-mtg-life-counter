@@ -2,7 +2,7 @@
 
 The MTG Life Counter is an Android app that allows people to easily keep track of life totals when playing "Magic the Gathering". Functionality includes support for up to 4 players, regular life total & poison counter tracker, end screen when a player loses, and user customized color schemes.
 
-###Screenshots
+###General Screenshots
 
 Starting screen, settings screen, life totals screen, and poison counter screen (respectively):
 
@@ -16,9 +16,18 @@ To use the app, from the main activity, the user will need to select the number 
 
 Pressing the Reset button will change all life totals back to "20" and all poison counters to "0". By pressing the Settings button the user will be taken to the Settings activity where they can change the names of the various players.
 
+###Inverted Second Player
+
+Below are images for when the "Invert second player's screen" option is selected:
+
+<p align="center">
+  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/both_inverted_screens.jpg?raw=true" alt="Player Screens"/>
+</p>
+
+The inverted screen is used only for two player (the option disappears when two players is not selected). This option makes it easier for the user's opponent to keep track of their own life total and poison counters since their player screen is orient in their direction. 
+
 
 ###To-do List:
-* Include option where the orientation of the player screen is rotated 180 degrees so that in two player mode the opponent can change the total themself
 * Consolidate player life total and poison counter fragments so there is only one standard fragment that can be used for all numbers of players
 * Add activity where the user can see a record of life total changes (Use services to check length between inputs?)
 * Add feature for when a player gets eliminated, it takes the user to a defeat screen then goes to a new activity with [player # - 1] people

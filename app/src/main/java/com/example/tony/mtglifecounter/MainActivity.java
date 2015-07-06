@@ -85,6 +85,7 @@ public class MainActivity extends ActionBarActivity{
         Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreen.class);
         Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
 
+        //Check if the "Invert second players screen" was selected
         if (invertSecondPlayer.isChecked()){
             dbManager.updateState("invertPlayerTwo", "true");
         }
