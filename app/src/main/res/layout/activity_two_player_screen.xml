@@ -11,17 +11,17 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.475"
-        android:name="com.example.tony.mtglifecounter.TwoPlayerLifeFragment"
+        android:name="com.example.tony.mtglifecounter.TwoPlayerFragment"
         android:id="@+id/fragment"
-        tools:layout="@layout/two_player_life_fragment" />
+        tools:layout="@layout/fragment_two_player" />
 
     <fragment
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.475"
-        android:name="com.example.tony.mtglifecounter.TwoPlayerLifeFragment"
+        android:name="com.example.tony.mtglifecounter.TwoPlayerFragment"
         android:id="@+id/fragment2"
-        tools:layout="@layout/two_player_life_fragment" />
+        tools:layout="@layout/fragment_two_player" />
 
     <fragment
         android:layout_width="fill_parent"

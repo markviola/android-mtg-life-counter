@@ -19,7 +19,7 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
-    TwoPlayerLifeFragment playerOne, playerTwo;
+    TwoPlayerFragment playerOne, playerTwo;
     DBManager dbManager;
 
     private GestureDetectorCompat gestureDetector;
@@ -40,11 +40,11 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         //References to Player One and Player Two fragments
         if (dbManager.dbGetState("invertPlayerTwo").equals("false")){
             //References to Player One and Player Two fragments
-            playerOne = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-            playerTwo = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+            playerOne = (TwoPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+            playerTwo = (TwoPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
         } else {
-            playerOne = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
-            playerTwo = (TwoPlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+            playerOne = (TwoPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+            playerTwo = (TwoPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
             playerTwo.invertPlayerScreen();
         }
 
@@ -53,6 +53,8 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         playerTwo.setLife(dbManager.dbGetLife(2));
         playerOne.setName(dbManager.dbGetName(1));
         playerTwo.setName(dbManager.dbGetName(2));
+        playerOne.setPoisonCounterView(Integer.parseInt(dbManager.dbGetPoison(1)));
+        playerTwo.setPoisonCounterView(Integer.parseInt(dbManager.dbGetPoison(2)));
     }
 
     /***************************************************************
@@ -137,6 +139,8 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         Intent settings = new Intent(getApplicationContext(), Settings.class);
         dbManager.updateLife(1, playerOne.getLife());
         dbManager.updateLife(2, playerTwo.getLife());
+        dbManager.updatePoison(1, Integer.toString(playerOne.getPoisonCounterValue()));
+        dbManager.updatePoison(2, Integer.toString(playerTwo.getPoisonCounterValue()));
         settings.putExtra("returnTo", "TwoPlayerScreen");
         startActivity(settings);
     }

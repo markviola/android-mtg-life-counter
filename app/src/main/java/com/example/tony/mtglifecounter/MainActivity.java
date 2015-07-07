@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity{
         }
     }
 
-    //Add the four players into the database
+    //Add the four players and game states into the database
     public void setup(){
         Log.i(TAG, "In setup");
         Player playerOne = new Player("Player One");
