@@ -33,21 +33,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".TwoPlayerScreenAlt"
-            android:label="@string/title_activity_two_player_screen_alt"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ThreePlayerScreenAlt"
-            android:label="@string/title_activity_three_player_screen_alt"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".FourPlayerScreenAlt"
-            android:label="@string/title_activity_four_player_screen_alt"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".Settings"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait" >

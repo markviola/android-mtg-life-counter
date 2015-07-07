@@ -5,24 +5,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
-
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.GestureDetector;
-import android.support.v4.view.GestureDetectorCompat;
 
 
 public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
-        ResetAndSettingsFragment.settingsListener, GestureDetector.OnGestureListener{
+        ResetAndSettingsFragment.settingsListener{
 
     private static final String TAG = "Tony message";
-    private static final int SWIPE_THRESHOLD = 100;
-    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
-    ThreePlayerLifeFragment playerOne, playerTwo, playerThree;
+    ThreePlayerFragment players[] = new ThreePlayerFragment[3];
     DBManager dbManager;
-
-    private GestureDetectorCompat gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,110 +23,41 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
         Log.i(TAG, "onCreate ThreePlayerScreen");
         getSupportActionBar().hide();
 
-        this.gestureDetector = new GestureDetectorCompat(this,this);
-
         //Allows the use of the database containing all the player information
         dbManager = new DBManager(this, null, null, 1);
 
         //References to Player One and Player Two fragments
-        playerOne = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment3);
-        playerTwo = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
-        playerThree = (ThreePlayerLifeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment5);
+        players[0] = (ThreePlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment3);
+        players[1] = (ThreePlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
+        players[2] = (ThreePlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment5);
 
         //Use data from the MTGDatabase
-        playerOne.setLife(dbManager.dbGetLife(1));
-        playerTwo.setLife(dbManager.dbGetLife(2));
-        playerThree.setLife(dbManager.dbGetLife(3));
-        playerOne.setName(dbManager.dbGetName(1));
-        playerTwo.setName(dbManager.dbGetName(2));
-        playerThree.setName(dbManager.dbGetName(3));
-    }
-
-    /***************************************************************
-     *                  Gesture Overrides Start                    *
-     ***************************************************************/
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        boolean result = false;
-        try {
-            float diffY = e2.getY() - e1.getY();
-            float diffX = e2.getX() - e1.getX();
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    Intent three_player = new Intent(getApplicationContext(), ThreePlayerScreenAlt.class);
-                    dbManager.updateLife(1, playerOne.getLife());
-                    dbManager.updateLife(2, playerTwo.getLife());
-                    dbManager.updateLife(3, playerThree.getLife());
-                    startActivity(three_player);
-                }
-            }
-            result = true;
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        for(int i =0; i < 3; i++){
+            players[i].setLife(dbManager.dbGetLife(i + 1));
+            players[i].setName(dbManager.dbGetName(i + 1));
+            players[i].setPoisonCounterView(Integer.parseInt(dbManager.dbGetPoison(i + 1)));
         }
-        return result;
     }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        this.gestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
-
-    /***************************************************************
-     *                   Gesture Overrides End                     *
-     ***************************************************************/
 
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        dbManager.updateLife(1, "20");
-        dbManager.updateLife(2, "20");
-        dbManager.updateLife(3, "20");
-        dbManager.updateLife(4, "20");
-
-        dbManager.updatePoison(1, "0");
-        dbManager.updatePoison(2, "0");
-        dbManager.updatePoison(3, "0");
-        dbManager.updatePoison(4, "0");
-
-        playerOne.setLife(dbManager.dbGetLife(1));
-        playerTwo.setLife(dbManager.dbGetLife(2));
-        playerThree.setLife(dbManager.dbGetLife(3));
+        for(int i = 0; i < 3; i++){
+            dbManager.updateLife(i + 1, "20");
+            dbManager.updatePoison(i + 1, "0");
+            players[i].setLife(dbManager.dbGetLife(i + 1));
+            players[i].setPoisonCounterView(Integer.parseInt(dbManager.dbGetPoison(i + 1)));
+        }
     }
 
     //This gets called by the ResetAndSettingsFragment when "Settings" is clicked
     @Override
     public void toSettings() {
+        for(int i = 0; i < 3; i++){
+            dbManager.updateLife(i + 1, players[i].getLife());
+            dbManager.updatePoison(i + 1, Integer.toString(players[i].getPoisonCounterValue()));
+        }
         Intent settings = new Intent(getApplicationContext(), Settings.class);
-        dbManager.updateLife(1, playerOne.getLife());
-        dbManager.updateLife(2, playerTwo.getLife());
-        dbManager.updateLife(3, playerThree.getLife());
         settings.putExtra("returnTo", "ThreePlayerScreen");
         startActivity(settings);
     }

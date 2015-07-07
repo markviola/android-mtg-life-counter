@@ -11,25 +11,25 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.316"
-        android:name="com.example.tony.mtglifecounter.ThreePlayerLifeFragment"
+        android:name="com.example.tony.mtglifecounter.ThreePlayerFragment"
         android:id="@+id/fragment3"
-        tools:layout="@layout/three_player_life_fragment" />
+        tools:layout="@layout/fragment_three_player" />
 
     <fragment
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.316"
-        android:name="com.example.tony.mtglifecounter.ThreePlayerLifeFragment"
+        android:name="com.example.tony.mtglifecounter.ThreePlayerFragment"
         android:id="@+id/fragment4"
-        tools:layout="@layout/three_player_life_fragment" />
+        tools:layout="@layout/fragment_three_player" />
 
     <fragment
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.316"
-        android:name="com.example.tony.mtglifecounter.ThreePlayerLifeFragment"
+        android:name="com.example.tony.mtglifecounter.ThreePlayerFragment"
         android:id="@+id/fragment5"
-        tools:layout="@layout/three_player_life_fragment" />
+        tools:layout="@layout/fragment_three_player" />
 
     <fragment
         android:layout_width="fill_parent"

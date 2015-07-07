@@ -136,6 +136,9 @@ public class TwoPlayerFragment extends Fragment {
         for (int i = 0; i < currentPoisonValue; i++){
             poisonCounters[i].setVisibility(View.VISIBLE);
         }
+        for (int j = currentPoisonValue; j < 10; j++){
+            poisonCounters[j].setVisibility(View.GONE);
+        }
         currentPoison = currentPoisonValue;
     }
 

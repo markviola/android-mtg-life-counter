@@ -86,20 +86,11 @@ public class Settings extends ActionBarActivity {
             case "TwoPlayerScreen":
                 returnToIntent = new Intent(getApplicationContext(), TwoPlayerScreen.class);
                 break;
-            case "TwoPlayerScreenAlt":
-                returnToIntent = new Intent(getApplicationContext(), TwoPlayerScreenAlt.class);
-                break;
             case "ThreePlayerScreen":
                 returnToIntent = new Intent(getApplicationContext(), ThreePlayerScreen.class);
                 break;
-            case "ThreePlayerScreenAlt":
-                returnToIntent = new Intent(getApplicationContext(), ThreePlayerScreenAlt.class);
-                break;
             case "FourPlayerScreen":
                 returnToIntent = new Intent(getApplicationContext(), FourPlayerScreen.class);
-                break;
-            case "FourPlayerScreenAlt":
-                returnToIntent = new Intent(getApplicationContext(), FourPlayerScreenAlt.class);
                 break;
             default:
                 returnToIntent = new Intent(getApplicationContext(), MainActivity.class);
