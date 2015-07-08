@@ -16,7 +16,7 @@ public class MainActivity extends ActionBarActivity{
 
     private static final String TAG = "Tony message";
     TextView num_players, title;
-    CheckBox gameTimer, invertSecondPlayer;
+    CheckBox gameTimer, invertSecondPlayer, commanderMode, twoHeadedGiantMode;
     DBManager dbManager;
 
     @Override
@@ -29,6 +29,8 @@ public class MainActivity extends ActionBarActivity{
         num_players = (TextView)findViewById(R.id.num_players);
         gameTimer = (CheckBox) findViewById(R.id.addTimerBox);
         invertSecondPlayer = (CheckBox) findViewById(R.id.invertSecondPlayerBox);
+        commanderMode = (CheckBox) findViewById(R.id.commanderMode);
+        twoHeadedGiantMode = (CheckBox) findViewById(R.id.twoHeadedGiantMode);
 
         //Allows the use of the database containing all the player information
         dbManager = new DBManager(this, null, null, 1);
@@ -39,6 +41,7 @@ public class MainActivity extends ActionBarActivity{
         } else {
             resetTotals();
         }
+        twoHeadedGiantMode.setVisibility(View.GONE); //Player number defaults at two players
     }
 
     //Add the four players and game states into the database
@@ -55,6 +58,8 @@ public class MainActivity extends ActionBarActivity{
         dbManager.addPlayer(playerThree);
         dbManager.addPlayer(playerFour);
         dbManager.addState("invertPlayerTwo", "false");
+        dbManager.addState("commanderMode", "false");
+        dbManager.addState("twoHeadedGiantMode", "false");
     }
 
     //Update database data to base settings
@@ -77,6 +82,8 @@ public class MainActivity extends ActionBarActivity{
         dbManager.updatePlayerName(4, "Player Four");
 
         dbManager.updateState("invertPlayerTwo", "false");
+        dbManager.updateState("commanderMode", "false");
+        dbManager.updateState("twoHeadedGiantMode", "false");
     }
 
     public void confirm_button(View v){
@@ -89,6 +96,17 @@ public class MainActivity extends ActionBarActivity{
         //Check if the "Invert second players screen" was selected
         if (invertSecondPlayer.isChecked()){
             dbManager.updateState("invertPlayerTwo", "true");
+        }
+
+        //Check if a special game mode is going to be played
+        if (commanderMode.isChecked()){
+            if (twoHeadedGiantMode.isChecked()){
+
+            } else {
+                dbManager.updateState("commanderMode", "true");
+            }
+        } else if (twoHeadedGiantMode.isChecked()){
+            dbManager.updateState("twoHeadedGiantMode", "true");
         }
 
         if (current_players == 2) {
@@ -105,6 +123,11 @@ public class MainActivity extends ActionBarActivity{
         if (current_players < 4) {
             current_players++;
             num_players.setText(String.valueOf(current_players));
+
+            //Only show the Two-Headed Giant mode option when four players is the current choice
+            if (current_players == 4){
+                twoHeadedGiantMode.setVisibility(View.VISIBLE);
+            }
         }
 
         //Any player increment leads to a player number greater than two, so hide checkbox
@@ -116,11 +139,12 @@ public class MainActivity extends ActionBarActivity{
         if (current_players > 2) {
             current_players--;
             num_players.setText(String.valueOf(current_players));
-        }
+            twoHeadedGiantMode.setVisibility(View.GONE);
 
-        //Only show the inverted second player option when two players is the current choice
-        if (current_players == 2){
-            invertSecondPlayer.setVisibility(View.VISIBLE);
+            //Only show the inverted second player option when two players is the current choice
+            if (current_players == 2){
+                invertSecondPlayer.setVisibility(View.VISIBLE);
+            }
         }
     }
 

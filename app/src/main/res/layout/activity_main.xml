@@ -82,14 +82,36 @@
         android:layout_below="@+id/confirm"
         android:layout_alignLeft="@+id/textBox1"
         android:layout_alignStart="@+id/textBox1"
-        android:layout_marginTop="38dp"/>
+        android:layout_marginTop="35dp"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Commander mode"
+        android:id="@+id/commanderMode"
+        android:layout_below="@+id/addTimerBox"
+        android:layout_alignLeft="@+id/addTimerBox"
+        android:layout_alignStart="@+id/addTimerBox"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Invert second player&apos;s screen"
         android:id="@+id/invertSecondPlayerBox"
-        android:layout_below="@+id/addTimerBox"
+        android:layout_below="@+id/commanderMode"
+        android:layout_alignLeft="@+id/addTimerBox"
+        android:layout_alignStart="@+id/addTimerBox"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Two-Headed Giant mode"
+        android:id="@+id/twoHeadedGiantMode"
+        android:layout_below="@+id/commanderMode"
         android:layout_alignLeft="@+id/addTimerBox"
         android:layout_alignStart="@+id/addTimerBox"
         android:textColor="#FFFFFF"
