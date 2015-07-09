@@ -13,6 +13,7 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
 
     private static final String TAG = "Tony message";
 
+    String startingLife;
     TwoPlayerFragment playerOne, playerTwo;
     DBManager dbManager;
 
@@ -44,13 +45,22 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         playerTwo.setName(dbManager.dbGetName(2));
         playerOne.setPoisonCounterView(Integer.parseInt(dbManager.dbGetPoison(1)));
         playerTwo.setPoisonCounterView(Integer.parseInt(dbManager.dbGetPoison(2)));
+
+        //Determine if game mode is normal, Commander, or Two-Headed Giant
+        if(dbManager.dbGetState("commanderMode").equals("true")){
+            startingLife = "40";
+        } else if(dbManager.dbGetState("twoHeadedGiantMode").equals("true")){
+            startingLife = "30";
+        } else {
+            startingLife = "20";
+        }
     }
 
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
-        dbManager.updateLife(1, "20");
-        dbManager.updateLife(2, "20");
+        dbManager.updateLife(1, startingLife);
+        dbManager.updateLife(2, startingLife);
         dbManager.updatePoison(1, "0");
         dbManager.updatePoison(2, "0");
 

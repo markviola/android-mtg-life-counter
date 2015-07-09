@@ -13,6 +13,7 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
 
     private static final String TAG = "Tony message";
 
+    String startingLife;
     ThreePlayerFragment players[] = new ThreePlayerFragment[3];
     DBManager dbManager;
 
@@ -37,13 +38,22 @@ public class ThreePlayerScreen extends ActionBarActivity implements ResetAndSett
             players[i].setName(dbManager.dbGetName(i + 1));
             players[i].setPoisonCounterView(Integer.parseInt(dbManager.dbGetPoison(i + 1)));
         }
+
+        //Determine if game mode is normal, Commander, or Two-Headed Giant
+        if(dbManager.dbGetState("commanderMode").equals("true")){
+            startingLife = "40";
+        } else if(dbManager.dbGetState("twoHeadedGiantMode").equals("true")){
+            startingLife = "30";
+        } else {
+            startingLife = "20";
+        }
     }
 
     //This gets called by the ResetAndSettingsFragment when "Reset" is clicked
     @Override
     public void resetTotal() {
         for(int i = 0; i < 3; i++){
-            dbManager.updateLife(i + 1, "20");
+            dbManager.updateLife(i + 1, startingLife);
             dbManager.updatePoison(i + 1, "0");
             players[i].setLife(dbManager.dbGetLife(i + 1));
             players[i].setPoisonCounterView(Integer.parseInt(dbManager.dbGetPoison(i + 1)));

@@ -11,8 +11,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.view.View;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
-public class MainActivity extends ActionBarActivity{
+
+public class MainActivity extends ActionBarActivity implements DialogInterface.OnClickListener{
 
     private static final String TAG = "Tony message";
     TextView num_players, title;
@@ -66,15 +70,10 @@ public class MainActivity extends ActionBarActivity{
     public void resetTotals(){
         Log.i(TAG, "In resetTotals");
 
-        dbManager.updateLife(1, "20");
-        dbManager.updateLife(2, "20");
-        dbManager.updateLife(3, "20");
-        dbManager.updateLife(4, "20");
-
-        dbManager.updatePoison(1, "0");
-        dbManager.updatePoison(2, "0");
-        dbManager.updatePoison(3, "0");
-        dbManager.updatePoison(4, "0");
+        for(int i = 0; i < 4; i++){
+            dbManager.updateLife(i + 1, "20");
+            dbManager.updatePoison(i + 1, "0");
+        }
 
         dbManager.updatePlayerName(1, "Player One");
         dbManager.updatePlayerName(2, "Player Two");
@@ -98,23 +97,65 @@ public class MainActivity extends ActionBarActivity{
             dbManager.updateState("invertPlayerTwo", "true");
         }
 
-        //Check if a special game mode is going to be played
-        if (commanderMode.isChecked()){
-            if (twoHeadedGiantMode.isChecked()){
-
-            } else {
-                dbManager.updateState("commanderMode", "true");
-            }
-        } else if (twoHeadedGiantMode.isChecked()){
-            dbManager.updateState("twoHeadedGiantMode", "true");
-        }
-
         if (current_players == 2) {
             startActivity(two_player);
         } else if (current_players == 3) {
             startActivity(three_player);
-        } else if (current_players ==4){
-            startActivity(four_player);
+        } else if (current_players == 4){
+            //Check if a special game mode is going to be played
+            if (commanderMode.isChecked()){
+                if (twoHeadedGiantMode.isChecked()){
+                    AlertDialog ad = new AlertDialog.Builder(this)
+                            .setTitle("Choose One Mode")
+                            .setPositiveButton("Two-Headed Giant", this)
+                            .setNegativeButton("Commander", this)
+                            .setCancelable(false)
+                            .create();
+                    ad.show();
+                } else {
+                    dbManager.updateState("commanderMode", "true");
+                    changeStartingLife("40");
+                    startActivity(four_player);
+                }
+            } else if (twoHeadedGiantMode.isChecked()){
+                dbManager.updateState("twoHeadedGiantMode", "true");
+                dbManager.updatePlayerName(1, "Team One");
+                dbManager.updatePlayerName(2, "Team Two");
+                changeStartingLife("30");
+                startActivity(two_player);
+            } else {
+                startActivity(four_player);
+            }
+        }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreen.class);
+        Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
+
+        switch(which){
+            //Two-Headed Giant selected
+            case DialogInterface.BUTTON_POSITIVE:
+                dbManager.updateState("twoHeadedGiantMode", "true");
+                dbManager.updatePlayerName(1, "Team One");
+                dbManager.updatePlayerName(2, "Team Two");
+                changeStartingLife("30");
+                startActivity(two_player);
+                break;
+            //Commander selected
+            case DialogInterface.BUTTON_NEGATIVE:
+                dbManager.updateState("commanderMode", "true");
+                changeStartingLife("40");
+                startActivity(four_player);
+                break;
+            default:
+        }
+    }
+
+    public void changeStartingLife(String newValue){
+        for(int i = 0; i < 4; i++){
+            dbManager.updateLife(i + 1, newValue);
         }
     }
 
