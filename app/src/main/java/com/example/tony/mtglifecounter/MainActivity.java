@@ -97,27 +97,25 @@ public class MainActivity extends ActionBarActivity implements DialogInterface.O
             dbManager.updateState("invertPlayerTwo", "true");
         }
 
+        if (commanderMode.isChecked()){
+            dbManager.updateState("commanderMode", "true");
+            changeStartingLife("40");
+        }
+
         if (current_players == 2) {
             startActivity(two_player);
         } else if (current_players == 3) {
             startActivity(three_player);
         } else if (current_players == 4){
-            //Check if a special game mode is going to be played
-            if (commanderMode.isChecked()){
-                if (twoHeadedGiantMode.isChecked()){
-                    AlertDialog ad = new AlertDialog.Builder(this)
-                            .setTitle("Choose One Mode")
-                            .setPositiveButton("Two-Headed Giant", this)
-                            .setNegativeButton("Commander", this)
-                            .setCancelable(false)
-                            .create();
-                    ad.show();
-                } else {
-                    dbManager.updateState("commanderMode", "true");
-                    changeStartingLife("40");
-                    startActivity(four_player);
-                }
-            } else if (twoHeadedGiantMode.isChecked()){
+            if(commanderMode.isChecked() && twoHeadedGiantMode.isChecked()) {
+                AlertDialog ad = new AlertDialog.Builder(this)
+                        .setTitle("Choose One Mode")
+                        .setPositiveButton("Two-Headed Giant", this)
+                        .setNegativeButton("Commander", this)
+                        .setCancelable(false)
+                        .create();
+                ad.show();
+            } else if (twoHeadedGiantMode.isChecked()) {
                 dbManager.updateState("twoHeadedGiantMode", "true");
                 dbManager.updatePlayerName(1, "Team One");
                 dbManager.updatePlayerName(2, "Team Two");
