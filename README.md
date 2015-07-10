@@ -18,11 +18,11 @@ Pressing the Reset button will change all life totals back to "20" and all poiso
 
 ###Inverted Second Player
 
-Below are images for when the "Invert second player's screen" option is selected:
+Below is the image for when the "Invert second player's screen" option is selected:
 
-<!-- <p align="center">
-  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/both_inverted_screens.jpg?raw=true" alt="Player Screens" height="328px" width="370px"/>
-</p> -->
+<p align="center">
+  <img src="https://github.com/markviola/android-mtg-life-counter/blob/master/images/two_player_inverted_new.jpg?raw=true" alt="Invered Player Screens" height="328px" width="185px"/>
+</p>
 
 The inverted screen is used only for two player (the option disappears when two players is not selected). This option makes it easier for the user's opponent to keep track of their own life total and poison counters since their player screen is orient in their direction. 
 

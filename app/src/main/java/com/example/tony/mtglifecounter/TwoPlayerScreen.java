@@ -36,6 +36,7 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
             playerOne = (TwoPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
             playerTwo = (TwoPlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
             playerTwo.invertPlayerScreen();
+            playerTwo.setInverted(true);
         }
 
         //Use data from the MTGDatabase
