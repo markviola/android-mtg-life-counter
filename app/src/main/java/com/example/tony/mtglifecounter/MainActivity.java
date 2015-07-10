@@ -22,6 +22,7 @@ public class MainActivity extends ActionBarActivity implements DialogInterface.O
     TextView num_players, title;
     CheckBox gameTimer, invertSecondPlayer, commanderMode, twoHeadedGiantMode;
     DBManager dbManager;
+    AlertDialog popUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,19 +109,19 @@ public class MainActivity extends ActionBarActivity implements DialogInterface.O
             startActivity(three_player);
         } else if (current_players == 4){
             if(commanderMode.isChecked() && twoHeadedGiantMode.isChecked()) {
-                AlertDialog ad = new AlertDialog.Builder(this)
+                popUp = new AlertDialog.Builder(this)
                         .setTitle("Choose One Mode")
                         .setPositiveButton("Two-Headed Giant", this)
                         .setNegativeButton("Commander", this)
                         .setCancelable(false)
                         .create();
-                ad.show();
+                popUp.show();
             } else if (twoHeadedGiantMode.isChecked()) {
                 dbManager.updateState("twoHeadedGiantMode", "true");
                 dbManager.updatePlayerName(1, "Team One");
                 dbManager.updatePlayerName(2, "Team Two");
                 changeStartingLife("30");
-                startActivity(two_player);
+                twoHeadedGiantInverted();
             } else {
                 startActivity(four_player);
             }
@@ -131,24 +132,60 @@ public class MainActivity extends ActionBarActivity implements DialogInterface.O
     public void onClick(DialogInterface dialog, int which) {
         Intent two_player = new Intent(getApplicationContext(), TwoPlayerScreen.class);
         Intent four_player = new Intent(getApplicationContext(), FourPlayerScreen.class);
+        Log.i(TAG, "Before text stuff");
+        TextView text = ((TextView) popUp.findViewById(getResources().getIdentifier(
+                "alertTitle", "id", "android")));
+        String popUpTitle = text.getText().toString();
+        Log.i(TAG, popUpTitle);
 
         switch(which){
-            //Two-Headed Giant selected
             case DialogInterface.BUTTON_POSITIVE:
-                dbManager.updateState("twoHeadedGiantMode", "true");
-                dbManager.updatePlayerName(1, "Team One");
-                dbManager.updatePlayerName(2, "Team Two");
-                changeStartingLife("30");
-                startActivity(two_player);
+                //Second popup, "Yes" selected
+                if(popUpTitle.equals("Invert Second Team's Screen")){
+                    dbManager.updateState("invertPlayerTwo", "true");
+                    dbManager.updateState("twoHeadedGiantMode", "true");
+                    dbManager.updatePlayerName(1, "Team One");
+                    dbManager.updatePlayerName(2, "Team Two");
+                    changeStartingLife("30");
+                    startActivity(two_player);
+                }
+                //First popup, "Two-Headed Giant" selected
+                else {
+                    dbManager.updateState("twoHeadedGiantMode", "true");
+                    dbManager.updatePlayerName(1, "Team One");
+                    dbManager.updatePlayerName(2, "Team Two");
+                    changeStartingLife("30");
+                    twoHeadedGiantInverted();
+                }
                 break;
-            //Commander selected
             case DialogInterface.BUTTON_NEGATIVE:
-                dbManager.updateState("commanderMode", "true");
-                changeStartingLife("40");
-                startActivity(four_player);
+                //Second popup, "No" selected
+                if(popUpTitle.equals("Invert Second Team's Screen")){
+                    dbManager.updateState("twoHeadedGiantMode", "true");
+                    dbManager.updatePlayerName(1, "Team One");
+                    dbManager.updatePlayerName(2, "Team Two");
+                    changeStartingLife("30");
+                    startActivity(two_player);
+                }
+                //First pop up, "Commander" selected
+                else {
+                    dbManager.updateState("commanderMode", "true");
+                    changeStartingLife("40");
+                    startActivity(four_player);
+                }
                 break;
             default:
         }
+    }
+
+    public void twoHeadedGiantInverted(){
+        popUp = new AlertDialog.Builder(this)
+                .setTitle("Invert Second Team's Screen")
+                .setPositiveButton("Yes", this)
+                .setNegativeButton("No", this)
+                .setCancelable(false)
+                .create();
+        popUp.show();
     }
 
     public void changeStartingLife(String newValue){
