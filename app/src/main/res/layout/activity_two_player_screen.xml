@@ -16,6 +16,14 @@
         tools:layout="@layout/fragment_two_player" />
 
     <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.example.tony.mtglifecounter.TimerFragment"
+        android:id="@+id/fragment13"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/fragment_timer" />
+
+    <fragment
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.475"

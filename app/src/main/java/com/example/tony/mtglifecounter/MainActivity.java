@@ -14,12 +14,13 @@ import android.view.View;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.CountDownTimer;
 
 
 public class MainActivity extends ActionBarActivity implements DialogInterface.OnClickListener{
 
     private static final String TAG = "Tony message";
-    TextView num_players, title;
+    TextView num_players, title, countdownText;
     CheckBox gameTimer, invertSecondPlayer, commanderMode, twoHeadedGiantMode;
     DBManager dbManager;
     AlertDialog popUp;
@@ -65,6 +66,7 @@ public class MainActivity extends ActionBarActivity implements DialogInterface.O
         dbManager.addState("invertPlayerTwo", "false");
         dbManager.addState("commanderMode", "false");
         dbManager.addState("twoHeadedGiantMode", "false");
+        dbManager.addState("timerOn", "false");
     }
 
     //Update database data to base settings
@@ -84,6 +86,7 @@ public class MainActivity extends ActionBarActivity implements DialogInterface.O
         dbManager.updateState("invertPlayerTwo", "false");
         dbManager.updateState("commanderMode", "false");
         dbManager.updateState("twoHeadedGiantMode", "false");
+        dbManager.updateState("timerOn", "false");
     }
 
     public void confirm_button(View v){
@@ -101,6 +104,10 @@ public class MainActivity extends ActionBarActivity implements DialogInterface.O
         if (commanderMode.isChecked()){
             dbManager.updateState("commanderMode", "true");
             changeStartingLife("40");
+        }
+
+        if (gameTimer.isChecked()){
+            dbManager.updateState("timerOn", "true");
         }
 
         if (current_players == 2) {

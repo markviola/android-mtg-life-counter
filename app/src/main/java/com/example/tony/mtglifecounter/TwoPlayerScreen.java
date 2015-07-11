@@ -1,5 +1,6 @@
 package com.example.tony.mtglifecounter;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.util.Log;
 
+import android.app.FragmentManager;
 
 public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
         ResetAndSettingsFragment.settingsListener{
@@ -15,6 +17,7 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
 
     String startingLife;
     TwoPlayerFragment playerOne, playerTwo;
+    TimerFragment countdownFrag;
     DBManager dbManager;
 
     @Override
@@ -27,6 +30,14 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         //Allows the use of the database containing all the player information
         dbManager = new DBManager(this, null, null, 1);
 
+        //Get reference to TimerFragment
+        countdownFrag = (TimerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment13);
+
+        //Check to see if timer needs to be shown or not
+        if (dbManager.dbGetState("timerOn").equals("false")){
+            countdownFrag.hideTimer();
+        }
+
         //References to Player One and Player Two fragments
         if (dbManager.dbGetState("invertPlayerTwo").equals("false")){
             //References to Player One and Player Two fragments
@@ -38,6 +49,15 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
             playerTwo.invertPlayerScreen();
             playerTwo.setInverted(true);
         }
+
+        /////////////////////////////////////////TEST///////////////////////
+//        FragmentManager fm = getFragmentManager();
+//        fm.beginTransaction()
+//                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+//                .show(playerOne)
+//                .commit();
+        /////////////////////////////////////////TEST///////////////////////
+
 
         //Use data from the MTGDatabase
         playerOne.setLife(dbManager.dbGetLife(1));

@@ -201,6 +201,7 @@ public class TwoPlayerFragment extends Fragment {
         isInverted = inverted;
     }
 
+    //Changes the layout of the player's screen so it appears as if it was rotated 180 degrees
     @TargetApi(11)
     public void invertPlayerScreen(){
         int screenDensity = Math.round(displayMetrics.density);
