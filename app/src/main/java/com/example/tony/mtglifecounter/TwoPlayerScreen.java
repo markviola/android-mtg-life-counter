@@ -10,8 +10,21 @@ import android.util.Log;
 
 import android.app.FragmentManager;
 
+//TimeService stuff
+import android.os.IBinder;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import com.example.tony.mtglifecounter.TimeService.MyLocalBinder;
+
 public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
         ResetAndSettingsFragment.settingsListener{
+
+    //*******TIME SERVIE STUFF********//
+    TimeService theService;
+    boolean isBound = false;
+    //*******TIME SERVIE STUFF********//
 
     private static final String TAG = "Tony message";
 
@@ -32,6 +45,11 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
 
         //Get reference to TimerFragment
         countdownFrag = (TimerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment13);
+
+        //*************START TIME SERVICE************//
+        Intent timeIntent = new Intent(this, TimeService.class);
+        bindService(timeIntent, timeConnection, Context.BIND_AUTO_CREATE);
+        //*************END TIME SERVICE************//
 
         //Check to see if timer needs to be shown or not
         if (dbManager.dbGetState("timerOn").equals("false")){
@@ -132,4 +150,20 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
 
         return super.onOptionsItemSelected(item);
     }
+
+    //*******TIME SERVICE STUFF********//
+    private ServiceConnection timeConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MyLocalBinder binder =  (MyLocalBinder) service;
+            theService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
+    //*******TIME SERVICE STUFF********//
 }

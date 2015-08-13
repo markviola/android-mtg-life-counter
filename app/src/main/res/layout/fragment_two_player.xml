@@ -195,4 +195,26 @@
         android:layout_marginRight="7dp"
         android:layout_alignParentRight="true"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-LP"
+        android:id="@+id/currentLoss"
+        android:textColor="#FF0000"
+        android:layout_alignTop="@+id/player_life"
+        android:layout_toRightOf="@+id/decPoison"
+        android:layout_toEndOf="@+id/decPoison" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-LP"
+        android:id="@+id/textView"
+        android:textColor="#00CC00"
+        android:layout_alignTop="@+id/player_life"
+        android:layout_toRightOf="@+id/poisonCounter9"
+        android:layout_toEndOf="@+id/poisonCounter9" />
+
 </RelativeLayout>

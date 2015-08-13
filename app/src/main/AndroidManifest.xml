@@ -41,6 +41,12 @@
             android:name=".DefeatScreen"
             android:label="@string/title_activity_defeat_screen" >
         </activity>
+
+        <service
+            android:name=".TimeService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

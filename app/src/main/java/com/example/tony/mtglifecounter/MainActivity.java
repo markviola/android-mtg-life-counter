@@ -14,7 +14,14 @@ import android.view.View;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.CountDownTimer;
+
+//TimeService stuff
+import android.os.IBinder;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import com.example.tony.mtglifecounter.TimeService.MyLocalBinder;
 
 
 public class MainActivity extends ActionBarActivity implements DialogInterface.OnClickListener{
