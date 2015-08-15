@@ -19,12 +19,13 @@ import android.content.ServiceConnection;
 import com.example.tony.mtglifecounter.TimeService.MyLocalBinder;
 
 public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettingsFragment.resetListener,
-        ResetAndSettingsFragment.settingsListener{
+        ResetAndSettingsFragment.settingsListener, TwoPlayerFragment.plusOneListener, TwoPlayerFragment.plusFiveListener,
+        TwoPlayerFragment.minusOneListener, TwoPlayerFragment.minusFiveListener{
 
-    //*******TIME SERVIE STUFF********//
+    //*******TIME SERVICE STUFF********//
     TimeService theService;
     boolean isBound = false;
-    //*******TIME SERVIE STUFF********//
+    //*******TIME SERVICE STUFF********//
 
     private static final String TAG = "Tony message";
 
@@ -119,6 +120,26 @@ public class TwoPlayerScreen extends ActionBarActivity implements ResetAndSettin
         dbManager.updatePoison(2, Integer.toString(playerTwo.getPoisonCounterValue()));
         settings.putExtra("returnTo", "TwoPlayerScreen");
         startActivity(settings);
+    }
+
+    @Override
+    public void minusFiveTimer() {
+
+    }
+
+    @Override
+    public void minusOneTimer() {
+
+    }
+
+    @Override
+    public void plusFiveTimer() {
+
+    }
+
+    @Override
+    public void plusOneTimer() {
+
     }
 
     //Gets rid of the issue with pressing the back button when too many life/poison activities

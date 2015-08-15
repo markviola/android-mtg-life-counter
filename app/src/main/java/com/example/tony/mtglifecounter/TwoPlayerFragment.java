@@ -1,6 +1,7 @@
 package com.example.tony.mtglifecounter;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,7 @@ public class TwoPlayerFragment extends Fragment {
 
     private static final String TAG = "Tony message";
     Button add_life_total, sub_life_total, add_life_total_5, sub_life_total_5;
-    TextView player_name, player_life;
+    TextView player_name, player_life, deltaPlus, deltaMinus;
     ImageView poisonCounters[] = new ImageView[10];
     ImageButton incPoison, decPoison;
     int currentPoison;
@@ -29,6 +30,40 @@ public class TwoPlayerFragment extends Fragment {
 
     DisplayMetrics displayMetrics;
     DBManager dbManager;
+
+    plusOneListener activityCommanderPlusOne;
+    plusFiveListener activityCommanderPlusFive;
+    minusOneListener activityCommanderMinusOne;
+    minusFiveListener activityCommanderMinusFive;
+
+    public interface plusOneListener{
+        public void plusOneTimer();
+    }
+
+    public interface plusFiveListener{
+        public void plusFiveTimer();
+    }
+
+    public interface minusOneListener{
+        public void minusOneTimer();
+    }
+
+    public interface minusFiveListener{
+        public void minusFiveTimer();
+    }
+
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        try{
+            activityCommanderPlusOne = (plusOneListener) activity;
+            activityCommanderPlusFive = (plusFiveListener) activity;
+            activityCommanderMinusOne = (minusOneListener) activity;
+            activityCommanderMinusFive = (minusFiveListener) activity;
+        }catch(ClassCastException e){
+            throw new ClassCastException(activity.toString());
+        }
+    }
 
     @Nullable
     @Override
@@ -40,6 +75,8 @@ public class TwoPlayerFragment extends Fragment {
         sub_life_total_5 = (Button) view.findViewById(R.id.sub_life_total_5);
         player_name = (TextView) view.findViewById(R.id.player_name);
         player_life = (TextView) view.findViewById(R.id.player_life);
+        deltaPlus = (TextView) view.findViewById(R.id.deltaPlus);
+        deltaMinus = (TextView) view.findViewById(R.id.deltaMinus);
         incPoison = (ImageButton) view.findViewById(R.id.incPoison);
         decPoison = (ImageButton) view.findViewById(R.id.decPoison);
         currentPoison = 0; //Keeps track of which element in the posionCounters array it currently is
@@ -53,10 +90,15 @@ public class TwoPlayerFragment extends Fragment {
         //Get phone screen data
         displayMetrics = getActivity().getResources().getDisplayMetrics();
 
+        //Hide delta plus and minus text
+        deltaPlus.setVisibility(View.GONE);
+        deltaMinus.setVisibility(View.GONE);
+
         add_life_total.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View v){
                         add_action();
+                        activityCommanderPlusOne.plusOneTimer();
                     }
                 }
         );
@@ -65,6 +107,7 @@ public class TwoPlayerFragment extends Fragment {
                 new View.OnClickListener(){
                     public void onClick(View v){
                         sub_action();
+                        activityCommanderMinusOne.minusOneTimer();
                     }
                 }
         );
@@ -73,6 +116,7 @@ public class TwoPlayerFragment extends Fragment {
                 new View.OnClickListener(){
                     public void onClick(View v){
                         add_5_action();
+                        activityCommanderPlusFive.plusFiveTimer();
                     }
                 }
         );
@@ -81,6 +125,7 @@ public class TwoPlayerFragment extends Fragment {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         sub_5_action();
+                        activityCommanderMinusFive.minusFiveTimer();
                     }
                 }
         );
@@ -199,6 +244,26 @@ public class TwoPlayerFragment extends Fragment {
 
     public void setInverted(boolean inverted){
         isInverted = inverted;
+    }
+
+    public void setDeltaPlus(String newDeltaPlus){ deltaPlus.setText("+" + newDeltaPlus); }
+
+    public void setDeltaMinus(String newDeltaMinus){ deltaMinus.setText("-" + newDeltaMinus); }
+
+    public void setDeltaPlusVisibility(boolean visible){
+        if (visible){
+            deltaPlus.setVisibility(View.VISIBLE);
+        } else {
+            deltaPlus.setVisibility(View.GONE);
+        }
+    }
+
+    public void setDeltaMinusVisibility(boolean visible){
+        if (visible){
+            deltaMinus.setVisibility(View.VISIBLE);
+        } else {
+            deltaMinus.setVisibility(View.GONE);
+        }
     }
 
     //Changes the layout of the player's screen so it appears as if it was rotated 180 degrees

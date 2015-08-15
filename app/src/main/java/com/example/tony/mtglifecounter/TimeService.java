@@ -15,6 +15,7 @@ public class TimeService extends Service {
 
     private static final String TAG = "Tony message";
     private final IBinder timeBinder = new MyLocalBinder();
+    boolean buttonPressed;
 
     public TimeService() {
 
@@ -61,6 +62,11 @@ public class TimeService extends Service {
     public String getCurrentTime(){
         SimpleDateFormat df = new SimpleDateFormat("MM:mm:ss", Locale.CANADA);
         return (df.format(new Date()));
+    }
+
+    public void buttonPressed(){
+        Log.i(TAG, "buttonPressed method called");
+        buttonPressed = true;
     }
 
     public class MyLocalBinder extends Binder{
